@@ -1,0 +1,14 @@
+ AI提问排障对话记录
+在从零搭建 Git 仓库的过程中，与 AI 协作攻克了多个报错，真实记录如下：
+
+1. 【路径与拼写错误排查】
+   问题：执行 git clone 报错 404 not found；执行 mkdir 和 cd 报错 command not found。
+   解决：向 AI 发送截图排查，发现是用户名拼写错误（shuagrui 误打成 shuangrui）以及漏掉 cd 命令。在此过程中深刻认识到命令行对字符和路径极度严谨的要求。
+
+2. 【中文引号导致终端卡死排查】
+   问题：执行 git commit -m "实测日志" 时，终端卡在 > 符号，后续命令无法执行。
+   解决：与 AI 分析发现是中文输入法的“弯引号”导致 Git 无法识别。通过 Ctrl+C 强行退出，切换纯英文输入法后成功提交。理解命令行的输入机制。
+
+3. 【空仓库克隆警告排查】
+   问题：首次克隆提示 warning: You appear to have cloned an empty repository.
+   解决：AI 解释了本地与远程的关联机制。使用 touch 命令与 VS Code 构建本地文件体系，成功完成首次 push。
