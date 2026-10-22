@@ -6,7 +6,7 @@
 
 **一站式宠物服务平台 · 连接爱宠人士 · 关爱流浪动物**
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-BSD-blue.svg)](LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-14.2-black?logo=next.js)](https://nextjs.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green?logo=node.js)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
@@ -148,7 +148,7 @@ Pethome/
 │   ├── package.json
 │   └── tsconfig.json
 ├── README.md              # 项目说明文档
-└── LICENSE               # MIT 许可证
+└── LICENSE               # BSD 许可证
 ```
 
 ---
@@ -341,7 +341,7 @@ npm run dev
 
 ## 📄 许可证
 
-本项目采用 [MIT 许可证](LICENSE)
+本项目采用 [BSD 许可证](LICENSE)
 
 ---
 
