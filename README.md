@@ -2,6 +2,8 @@
 
 <div align="center">
 
+![PetHome 封面](/public/cover.png)
+
 ![PetHome Banner](https://img.shields.io/badge/PetHome-宠物家园 -FF6B9D?style=for-the-badge&logo=heart)
 
 **一站式宠物服务平台 · 连接爱宠人士 · 关爱流浪动物**
