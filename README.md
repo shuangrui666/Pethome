@@ -49,6 +49,10 @@
 
 ![功能模块]
 申请领养页面<img width="2208" height="1394" alt="image" src="https://github.com/user-attachments/assets/882ae3d7-2e17-4883-9875-25efd349ba59" />
+发布走失宠物信息<img width="2358" height="1582" alt="image" src="https://github.com/user-attachments/assets/7fe9ed4c-e20f-4181-8eec-da757b5a9d4c" />
+帮助寻回宠物<img width="2226" height="1426" alt="image" src="https://github.com/user-attachments/assets/61d029b7-4e84-48b8-916c-8cf6fd3d9efe" />
+防止宠物走丢<img width="2256" height="1404" alt="image" src="https://github.com/user-attachments/assets/f0cb40a0-5bdb-4a17-b16f-9e794fae9cd8" />
+
 
 
 </div>
