@@ -44,24 +44,28 @@
 
 <div align="center">
 
-![首页]<img width="2206" height="1360" alt="image" src="https://github.com/user-attachments/assets/20361164-175c-41ff-bbaa-67b819c0095f" />
+[首页]<img width="2206" height="1360" alt="image" src="https://github.com/user-attachments/assets/20361164-175c-41ff-bbaa-67b819c0095f" />
 
 
-![功能模块]
+[功能模块]
 申请领养页面
 填写你的基本信息，我们会双向的帮助你与流浪动物选择适合彼此
 <img width="2208" height="1394" alt="image" src="https://github.com/user-attachments/assets/882ae3d7-2e17-4883-9875-25efd349ba59" />
+
 
 发布走失宠物信息
 当你的宠物走丢时，您一定很着急。在这里，你可以发布你的宠物的基本信息，让更加多的人帮您寻回至亲的宠物。
 <img width="2358" height="1582" alt="image" src="https://github.com/user-attachments/assets/7fe9ed4c-e20f-4181-8eec-da757b5a9d4c" />
 
+
 当然，在这里，你也可以看见那些走丢的宠物们。当你在路边看见他们时，请一定要联系他们的主人，帮助他们回家。
 <img width="2226" height="1426" alt="image" src="https://github.com/user-attachments/assets/61d029b7-4e84-48b8-916c-8cf6fd3d9efe" />
+
 
 防止宠物走丢
 在这个页面里，你可以看见你的宠物的活动范围。当它远离呢设定的范围时，你会收到警报，提醒你要注意啦！
 <img width="2256" height="1404" alt="image" src="https://github.com/user-attachments/assets/f0cb40a0-5bdb-4a17-b16f-9e794fae9cd8" />
+
 
 宠物幼儿园
 这里有全中国的宠物幼儿园，你可以挑选一家适合你家宠物的幼儿园。但是，请你放心。这些幼儿园都时有实时监控的，你可以随时查看您家宠物的情况。
