@@ -44,7 +44,8 @@
 
 <div align="center">
 
-![首页](https://img.shields.io/badge/首页 - 温馨可爱的宠物展示页面-FFB6C1?style=for-the-badge)
+![首页]<img width="2206" height="1360" alt="image" src="https://github.com/user-attachments/assets/20361164-175c-41ff-bbaa-67b819c0095f" />
+首页 - 温馨可爱的宠物展示页面-FFB6C1?style=for-the-badge)
 
 ![功能模块](https://img.shields.io/badge/功能模块 - 领养/医院/救助/社区一站式服务-98FB98?style=for-the-badge)
 
