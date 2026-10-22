@@ -71,6 +71,24 @@
 这里有全中国的宠物幼儿园，你可以挑选一家适合你家宠物的幼儿园。但是，请你放心。这些幼儿园都时有实时监控的，你可以随时查看您家宠物的情况。
 <img width="2268" height="1392" alt="屏幕截图 2026-10-22 193935" src="https://github.com/user-attachments/assets/46cb4001-e025-4380-8f0a-8985c4e651a1" /><img width="2272" height="1408" alt="屏幕截图 2026-10-22 194523" src="https://github.com/user-attachments/assets/14a11da8-7b6c-43ce-b8e0-6c30478014cd" />
 
+宠物店铺
+<img width="2294" height="1402" alt="image" src="https://github.com/user-attachments/assets/7d62b5f0-c3e5-4331-9045-ada979e3de89" />
+
+同城约伴
+<img width="2278" height="1426" alt="image" src="https://github.com/user-attachments/assets/dabc86cf-7f7a-4842-a651-a63ef1e5a154" />
+
+宠物医药
+<img width="2258" height="1430" alt="image" src="https://github.com/user-attachments/assets/9e51e2a1-1adc-4c91-8a51-caab60b942a7" />
+
+宠物资助
+<img width="2224" height="1400" alt="image" src="https://github.com/user-attachments/assets/d9ccafb5-3d31-479c-a0fc-e805cada435f" />
+
+训狗服务
+<img width="2234" height="1406" alt="image" src="https://github.com/user-attachments/assets/9eece611-a2f4-42b6-8826-ab6255a6e5f4" />
+
+养宠社区
+<img width="1912" height="1160" alt="屏幕截图 2026-10-22 202919" src="https://github.com/user-attachments/assets/7a43d621-c1fc-47c9-91ad-308307a97488" />
+
 
 
 
