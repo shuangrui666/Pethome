@@ -1,10 +1,10 @@
-# 馃彔 PetHome - 瀹犵墿瀹跺洯
+# 🏠 PetHome - 宠物家园
 
 <div align="center">
 
-![PetHome Banner](https://img.shields.io/badge/PetHome-瀹犵墿瀹跺洯-FF6B9D?style=for-the-badge&logo=heart)
+![PetHome Banner](https://img.shields.io/badge/PetHome-宠物家园 -FF6B9D?style=for-the-badge&logo=heart)
 
-**涓€绔欏紡瀹犵墿鏈嶅姟骞冲彴 路 杩炴帴鐖卞疇浜哄＋ 路 鍏崇埍娴佹氮鍔ㄧ墿**
+**一站式宠物服务平台 · 连接爱宠人士 · 关爱流浪动物**
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-14.2-black?logo=next.js)](https://nextjs.org/)
@@ -12,125 +12,173 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-8.0-green?logo=mongodb)](https://www.mongodb.com/)
 
-[鏌ョ湅鍦ㄧ嚎婕旂ず](https://dashing-sopapillas-03316d.netlify.app) | [鎶ュ憡 Bug](https://github.com/shuangrui666/Pethome/issues) | [璐＄尞浠ｇ爜](#璐＄尞鎸囧崡)
+[查看在线演示](https://dashing-sopapillas-03316d.netlify.app) | [报告 Bug](https://github.com/shuangrui666/Pethome/issues) | [贡献代码](#贡献指南)
 
 </div>
 
 ---
 
-## 馃摉 椤圭洰绠€浠?
-**PetHome锛堝疇鐗╁鍥級** 鏄竴娆句笓涓虹埍瀹犱汉澹墦閫犵殑涓€绔欏紡鏈嶅姟骞冲彴锛岃嚧鍔涗簬瑙ｅ喅鍏诲疇杩囩▼涓殑鍚勭鐥涚偣闂銆傛棤璁烘槸瀵绘壘棰嗗吇銆佸疇鐗╁尰鐤椼€佹祦娴晳鍔╋紝杩樻槸鍒嗕韩鍏诲疇缁忛獙锛孭etHome 閮借兘涓烘偍鎻愪緵鍏ㄦ柟浣嶇殑鏈嶅姟銆?
-### 鉁?鏍稿績鍔熻兘
+## 📖 项目简介
 
-<div align="center">
+**PetHome（宠物家园）** 是一款专为爱宠人士打造的一站式服务平台，致力于解决养宠过程中的各种痛点问题。无论是寻找领养、宠物医疗、流浪救助，还是分享养宠经验，PetHome 都能为您提供全方位的服务。
 
-| 馃彔 瀹犵墿棰嗗吇 | 馃彞 瀹犵墿鍖婚櫌 | 馃啒 娴佹氮鏁戝姪 | 馃挰 绀惧尯浜ゆ祦 |
+### ✨ 核心功能
+
+| 🏠 宠物领养 | 🏥 宠物医院 | 🆘 流浪救助 | 💬 社区交流 |
 |:---:|:---:|:---:|:---:|
-| 瀵绘壘蹇冧华瀹犵墿 | 闄勮繎鍖婚櫌鏌ヨ | 娴佹氮鍔ㄧ墿鏁戝姪 | 鍏诲疇缁忛獙鍒嗕韩 |
-| 棰嗗吇鐢宠娴佺▼ | 鍖荤敓鍦ㄧ嚎鍜ㄨ | 鏁戝姪鐐圭鐞?| 瀹犵墿绀句氦浜掑姩 |
+| 寻找心仪宠物 | 附近医院查询 | 流浪动物救助 | 养宠经验分享 |
+| 领养申请流程 | 医生在线咨询 | 救助点管理 | 宠物社交互动 |
 
-</div>
+### 🎯 项目特色
 
-### 馃幆 椤圭洰鐗硅壊
-
-- 馃悤 **鍏ㄩ潰鐨勫疇鐗╂湇鍔?* - 鏁村悎棰嗗吇銆佸尰鐤椼€佹晳鍔┿€佺ぞ浜ゅ洓澶ф牳蹇冨姛鑳?- 馃搷 **LBS 浣嶇疆鏈嶅姟** - 鍩轰簬鍦扮悊浣嶇疆鎺ㄨ崘闄勮繎鐨勫疇鐗╁尰闄€佹晳鍔╃偣
-- 馃挰 **瀹炴椂娑堟伅鎺ㄩ€?* - 浣跨敤 Socket.IO 瀹炵幇鍗虫椂閫氳鍔熻兘
-- 馃攼 **瀹夊叏鍙潬** - JWT 璁よ瘉 + 鏁版嵁鍔犲瘑 + 杈撳叆楠岃瘉
-- 馃摫 **鍝嶅簲寮忚璁?* - 閫傞厤 PC 绔拰绉诲姩绔紝闅忔椂闅忓湴浣跨敤
-- 馃帹 **娓╅Θ鐣岄潰** - 鍙埍娓╅Θ鐨勮璁￠鏍硷紝鎻愬崌鐢ㄦ埛浣撻獙
+- 🐕 **全面的宠物服务** - 整合领养、医疗、救助、社交四大核心功能
+- 📍 **LBS 位置服务** - 基于地理位置推荐附近的宠物医院、救助点
+- 💬 **实时消息推送** - 使用 Socket.IO 实现即时通讯功能
+- 🔐 **安全可靠** - JWT 认证 + 数据加密 + 输入验证
+- 📱 **响应式设计** - 适配 PC 端和移动端，随时随地使用
+- 🎨 **温馨界面** - 可爱温馨的设计风格，提升用户体验
 
 ---
 
-## 馃柤锔?椤圭洰鎴浘
+## 🖼️ 项目截图
 
 <div align="center">
 
-![棣栭〉](https://img.shields.io/badge/棣栭〉 - 娓╅Θ鍙埍鐨勫疇鐗╁睍绀洪〉闈?FFB6C1?style=for-the-badge)
+![首页](https://img.shields.io/badge/首页 - 温馨可爱的宠物展示页面-FFB6C1?style=for-the-badge)
 
-![鍔熻兘妯″潡](https://img.shields.io/badge/鍔熻兘妯″潡 - 棰嗗吇/鍖婚櫌/鏁戝姪/绀惧尯涓€绔欏紡鏈嶅姟-98FB98?style=for-the-badge)
+![功能模块](https://img.shields.io/badge/功能模块 - 领养/医院/救助/社区一站式服务-98FB98?style=for-the-badge)
 
 </div>
 
 ---
 
-## 馃彈锔?鎶€鏈灦鏋?
-### 鍓嶇鎶€鏈爤
+## 🛠️ 技术架构
+
+### 前端技术栈
 
 ```
-鈹屸攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?鈹?                   鍓嶇 (Next.js 14)                      鈹?鈹溾攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?鈹? 鈥?React 18          鈥?TypeScript 5                      鈹?鈹? 鈥?Tailwind CSS      鈥?Radix UI                          鈹?鈹? 鈥?Axios             鈥?Socket.IO Client                  鈹?鈹? 鈥?React Bootstrap   鈥?Lucide Icons                      鈹?鈹斺攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?```
+├───────────────────────────────────────────────
+│                   前端 (Next.js 14)                      │
+├───────────────────────────────────────────────────────────┤
+│ • React 18          • TypeScript 5                      │
+│ • Tailwind CSS      • Radix UI                          │
+│ • Axios             • Socket.IO Client                  │
+│ • React Bootstrap   • Lucide Icons                      │
+└───────────────────────────────────────────────────────────┘
+```
 
-### 鍚庣鎶€鏈爤
+### 后端技术栈
 
 ```
-鈹屸攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?鈹?                  鍚庣 (Node.js + Express)                鈹?鈹溾攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?鈹? 鈥?TypeScript 5      鈥?Express 4                         鈹?鈹? 鈥?MongoDB + Mongoose 8  鈥?Socket.IO                     鈹?鈹? 鈥?JWT 璁よ瘉          鈥?bcrypt 鍔犲瘑                       鈹?鈹? 鈥?Helmet 瀹夊叏       鈥?CORS 璺ㄥ煙                         鈹?鈹? 鈥?Multer 鏂囦欢涓婁紶   鈥?Express Validator                 鈹?鈹斺攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?```
-
-### 绯荤粺鏋舵瀯鍥?
+├───────────────────────────────────────────────
+│                  后端 (Node.js + Express)                │
+├───────────────────────────────────────────────────────────┤
+│ • TypeScript 5      • Express 4                         │
+│ • MongoDB + Mongoose 8  • Socket.IO                     │
+│ • JWT 认证          • bcrypt 加密                       │
+│ • Helmet 安全       • CORS 跨域                         │
+│ • Multer 文件上传   • Express Validator                 │
+└───────────────────────────────────────────────────────────┘
 ```
-鈹屸攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?        鈹屸攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?鈹?  鐢ㄦ埛绔?     鈹? HTTPS  鈹?  Netlify    鈹?鈹? (娴忚鍣?     鈹?鈫愨攢鈹€鈹€鈹€鈹€鈹€鈫掆攤   (CDN)      鈹?鈹斺攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?        鈹斺攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?       鈫?                        鈫?       鈹斺攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈫? Next.js 鏋勫缓  鈫愨攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?                                              鈹?鈹屸攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?        鈹屸攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?   鈹?鈹?  鐢ㄦ埛璇锋眰    鈹? HTTP   鈹? Next.js API  鈹?   鈹?鈹斺攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?鈫愨攢鈹€鈹€鈹€鈹€鈹€鈫?鈹? 鏈嶅姟绔覆鏌?  鈹?   鈹?                          鈹斺攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?   鈹?                                      鈫?      鈹?                          鈹屸攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?                          鈹?  RESTful API     鈹?                          鈹斺攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?                                      鈫?鈹屸攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?        鈹屸攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?   鈹?鈹? 瀹炴椂娑堟伅     鈹? WS     鈹? Socket.IO   鈹?   鈹?鈹斺攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?鈫愨攢鈹€鈹€鈹€鈹€鈹€鈫?鈹? 娑堟伅鎺ㄩ€?   鈹?   鈹?                          鈹斺攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?   鈹?                                      鈫?      鈹?                          鈹屸攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?                          鈹? MongoDB 鏁版嵁搴?  鈹?                          鈹? (鐢ㄦ埛/瀹犵墿/鍖婚櫌) 鈹?                          鈹斺攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?```
+
+### 系统架构图
+
+```
+├──────────────┐        ┌──────────────┐
+│  用户端      │ HTTPS  │  Netlify     │
+│  (浏览器)    │◄──────►│  (CDN)       │
+└──────────────┘        └──────────────┘
+       │                        │
+       └────────┬───────────────┘
+                ▼
+       ┌────────────────┐
+       │ Next.js 构建   │
+       │ 服务端渲染     │
+       └────────────────┘
+                │
+                ▼
+       ┌────────────────┐
+       │ RESTful API    │
+       └────────────────┘
+                │
+                ▼
+       ┌────────────────┐
+       │ MongoDB 数据库  │
+       │ (用户/宠物/医院)│
+       └────────────────┘
+```
 
 ---
 
-## 馃搧 椤圭洰鐩綍
+## 📂 项目目录
 
 ```
 Pethome/
-鈹溾攢鈹€ client/                 # 鍓嶇 Next.js 椤圭洰
-鈹?  鈹溾攢鈹€ app/               # Next.js 14 App Router 璺敱
-鈹?  鈹?  鈹溾攢鈹€ page.tsx       # 棣栭〉
-鈹?  鈹?  鈹溾攢鈹€ adopt/         # 瀹犵墿棰嗗吇椤甸潰
-鈹?  鈹?  鈹溾攢鈹€ hospitals/     # 瀹犵墿鍖婚櫌椤甸潰
-鈹?  鈹?  鈹溾攢鈹€ lost-found/    # 璧板け/瀵诲洖椤甸潰
-鈹?  鈹?  鈹溾攢鈹€ community/     # 绀惧尯浜ゆ祦椤甸潰
-鈹?  鈹?  鈹斺攢鈹€ ...
-鈹?  鈹溾攢鈹€ components/        # React 缁勪欢
-鈹?  鈹溾攢鈹€ api/               # API 瀹㈡埛绔?鈹?  鈹溾攢鈹€ public/            # 闈欐€佽祫婧?鈹?  鈹斺攢鈹€ netlify.toml       # Netlify 閰嶇疆
-鈹?鈹溾攢鈹€ server/                # 鍚庣 Node.js 椤圭洰
-鈹?  鈹溾攢鈹€ src/
-鈹?  鈹?  鈹溾攢鈹€ controllers/   # 涓氬姟閫昏緫鎺у埗鍣?鈹?  鈹?  鈹?  鈹溾攢鈹€ authController.ts
-鈹?  鈹?  鈹?  鈹溾攢鈹€ petController.ts
-鈹?  鈹?  鈹?  鈹溾攢鈹€ hospitalController.ts
-鈹?  鈹?  鈹?  鈹斺攢鈹€ ...
-鈹?  鈹?  鈹溾攢鈹€ models/        # MongoDB 鏁版嵁妯″瀷
-鈹?  鈹?  鈹?  鈹溾攢鈹€ User.ts
-鈹?  鈹?  鈹?  鈹溾攢鈹€ Pet.ts
-鈹?  鈹?  鈹?  鈹溾攢鈹€ Hospital.ts
-鈹?  鈹?  鈹?  鈹斺攢鈹€ ...
-鈹?  鈹?  鈹溾攢鈹€ routes/        # API 璺敱
-鈹?  鈹?  鈹溾攢鈹€ middleware/    # 涓棿浠?鈹?  鈹?  鈹?  鈹溾攢鈹€ auth.ts    # 璁よ瘉涓棿浠?鈹?  鈹?  鈹?  鈹溾攢鈹€ upload.ts  # 鏂囦欢涓婁紶涓棿浠?鈹?  鈹?  鈹?  鈹斺攢鈹€ validation.ts
-鈹?  鈹?  鈹斺攢鈹€ index.ts       # 鍏ュ彛鏂囦欢
-鈹?  鈹溾攢鈹€ scripts/           # 鏁版嵁绉嶅瓙鑴氭湰
-鈹?  鈹溾攢鈹€ package.json
-鈹?  鈹斺攢鈹€ tsconfig.json
-鈹?鈹溾攢鈹€ README.md              # 椤圭洰璇存槑鏂囨。
-鈹斺攢鈹€ LICENSE               # MIT 璁稿彲璇?```
+├── client/                 # 前端 Next.js 项目
+│   ├── app/               # Next.js 14 App Router 路由
+│   │   ├── page.tsx       # 首页
+│   │   ├── adopt/         # 宠物领养页面
+│   │   ├── hospitals/     # 宠物医院页面
+│   │   ├── lost-found/    # 走失/寻回页面
+│   │   ├── community/     # 社区交流页面
+│   │   └── ...
+│   ├── components/        # React 组件
+│   ├── api/               # API 客户端
+│   ├── public/            # 静态资源
+│   └── netlify.toml       # Netlify 配置
+├── server/                # 后端 Node.js 项目
+│   ├── src/
+│   │   ├── controllers/   # 业务逻辑控制器
+│   │   │   ├── authController.ts
+│   │   │   ├── petController.ts
+│   │   │   ├── hospitalController.ts
+│   │   │   └── ...
+│   │   ├── models/        # MongoDB 数据模型
+│   │   │   ├── User.ts
+│   │   │   ├── Pet.ts
+│   │   │   ├── Hospital.ts
+│   │   │   └── ...
+│   │   ├── routes/        # API 路由
+│   │   ├── middleware/    # 中间件
+│   │   │   ├── auth.ts    # 认证中间件
+│   │   │   ├── upload.ts  # 文件上传中间件
+│   │   │   └── validation.ts
+│   │   └── index.ts       # 入口文件
+│   ├── scripts/           # 数据种子脚本
+│   ├── package.json
+│   └── tsconfig.json
+├── README.md              # 项目说明文档
+└── LICENSE               # MIT 许可证
+```
 
 ---
 
-## 馃殌 蹇€熷紑濮?
-### 鍓嶇疆瑕佹眰
+## 🚀 快速开始
+
+### 前置要求
 
 - Node.js >= 18
 - MongoDB >= 6.0
-- npm 鎴?yarn
+- npm 或 yarn
 
-### 鐜閰嶇疆
+### 环境配置
 
-#### 1锔忊儯 鍏嬮殕椤圭洰
+#### 1️⃣ 克隆项目
 
 ```bash
 git clone https://github.com/shuangrui666/Pethome.git
 cd Pethome
 ```
 
-#### 2锔忊儯 鍚庣閰嶇疆
+#### 2️⃣ 后端配置
 
 ```bash
 cd server
 
-# 瀹夎渚濊禆
+# 安装依赖
 npm install
 
-# 鍒涘缓 .env 鏂囦欢
+# 创建 .env 文件
 cat > .env << EOF
 PORT=5000
 MONGODB_URI=mongodb://localhost:27017/pethome
@@ -138,205 +186,179 @@ JWT_SECRET=your-secret-key-here
 NODE_ENV=development
 EOF
 
-# 鍚姩寮€鍙戞湇鍔″櫒
+# 启动开发服务器
 npm run dev
 
-# 鍒濆鍖栨祴璇曟暟鎹?npm run seed:all
+# 初始化测试数据
+npm run seed:all
 ```
 
-#### 3锔忊儯 鍓嶇閰嶇疆
+#### 3️⃣ 前端配置
 
 ```bash
 cd ../client
 
-# 瀹夎渚濊禆
+# 安装依赖
 npm install
 
-# 鍒涘缓 .env.local 鏂囦欢
+# 创建 .env.local 文件
 cat > .env.local << EOF
 NEXT_PUBLIC_API_URL=http://localhost:5000
 NEXT_PUBLIC_SOCKET_URL=http://localhost:5000
 EOF
 
-# 鍚姩寮€鍙戞湇鍔″櫒
+# 启动开发服务器
 npm run dev
 ```
 
-#### 4锔忊儯 璁块棶搴旂敤
+#### 4️⃣ 访问应用
 
-鎵撳紑娴忚鍣ㄨ闂細http://localhost:3000
-
----
-
-## 馃摝 閮ㄧ讲璇存槑
-
-### Netlify 閮ㄧ讲锛堟帹鑽愶級
-
-鏈」鐩凡閰嶇疆濂?`netlify.toml`锛屾敮鎸佷竴閿儴缃诧細
-
-1. 灏嗕唬鐮佹帹閫佸埌 GitHub
-2. 鍦?Netlify 杩炴帴 GitHub 浠撳簱
-3. 閰嶇疆鐜鍙橀噺锛?   - `NEXT_PUBLIC_API_URL` - 鍚庣 API 鍦板潃
-   - `NEXT_PUBLIC_SOCKET_URL` - WebSocket 鍦板潃
-4. 鑷姩鏋勫缓骞朵笂绾?
-**褰撳墠閮ㄧ讲鐘舵€侊細**
-- 鉁?宸查儴缃插埌 Netlify
-- 馃寪 璁块棶鍦板潃锛歨ttps://dashing-sopapillas-03316d.netlify.app
+打开浏览器访问：http://localhost:3000
 
 ---
 
-## 馃敡 寮€鍙戞寚鍗?
-### 椤圭洰缁撴瀯璇存槑
+## 📦 部署说明
 
-| 鐩綍 | 璇存槑 |
-|------|------|
-| `client/app` | Next.js 14 椤甸潰璺敱 |
-| `client/components` | 鍙鐢?UI 缁勪欢 |
-| `server/src/controllers` | 涓氬姟閫昏緫澶勭悊 |
-| `server/src/models` | 鏁版嵁搴撴ā鍨嬪畾涔?|
-| `server/src/routes` | API 璺敱閰嶇疆 |
-| `server/src/middleware` | 涓棿浠讹紙璁よ瘉銆佷笂浼犵瓑锛?|
-| `server/scripts` | 鏁版嵁绉嶅瓙鑴氭湰 |
+### Netlify 部署（推荐）
 
-### 甯哥敤鍛戒护
+本项目已配置好 `netlify.toml`，支持一键部署：
 
-**鍓嶇锛?*
-```bash
-npm run dev      # 鍚姩寮€鍙戞湇鍔″櫒
-npm run build    # 鐢熶骇鏋勫缓
-npm run start    # 鍚姩鐢熶骇鏈嶅姟鍣?npm run lint     # 浠ｇ爜妫€鏌?```
+1. 将代码推送到 GitHub
+2. 在 Netlify 连接 GitHub 仓库
+3. 配置环境变量
+   - `NEXT_PUBLIC_API_URL` - 后端 API 地址
+   - `NEXT_PUBLIC_SOCKET_URL` - WebSocket 地址
+4. 自动构建并上线
 
-**鍚庣锛?*
-```bash
-npm run dev          # 鍚姩寮€鍙戞湇鍔″櫒
-npm run build        # TypeScript 缂栬瘧
-npm run start        # 鍚姩鐢熶骇鏈嶅姟鍣?npm run seed:all     # 鍒濆鍖栨墍鏈夋祴璇曟暟鎹?npm run seed:shops   # 鍒濆鍖栧疇鐗╁簵鏁版嵁
-npm run seed:hospitals # 鍒濆鍖栧尰闄㈡暟鎹?```
+**当前部署状态：**
+- ✅ 已部署到 Netlify
+- 🌐 访问地址：https://dashing-sopapillas-03316d.netlify.app
 
 ---
 
-## 馃 璐＄尞鎸囧崡
+## 🤝 贡献指南
 
-鎴戜滑娆㈣繋鎵€鏈夌殑璐＄尞锛佹棤璁烘槸浠ｇ爜銆佹枃妗ｃ€佽璁¤繕鏄弽棣堬紝閮介潪甯告劅璋€?
-### 璐＄尞娴佺▼
+我们欢迎所有的贡献！无论是代码、文档、设计还是反馈，都非常感谢。
 
-1. **Fork** 鏈」鐩埌浣犵殑 GitHub 璐﹀彿
-2. **Clone** 椤圭洰鍒版湰鍦?   ```bash
-   git clone https://github.com/shuangrui666/Pethome.git
-   ```
-3. 鍒涘缓浣犵殑 **Feature Branch**
-   ```bash
-   git checkout -b feature/AmazingFeature
-   ```
-4. **Commit** 浣犵殑鏇存敼
-   ```bash
-   git commit -m 'Add some AmazingFeature'
-   ```
-5. **Push** 鍒板垎鏀?   ```bash
-   git push origin feature/AmazingFeature
-   ```
-6. 寮€鍚竴涓?**Pull Request**
+### 贡献流程
 
-### 璐＄尞绫诲瀷
+1. **Fork** 本项目到你的 GitHub 账号
+2. **Clone** 项目到本地
+3. 创建你的 **Feature Branch**
+4. **Commit** 你的更改
+5. **Push** 到分支
+6. 开启一个 **Pull Request**
 
-- 馃悰 **Bug 淇** - 淇浠ｇ爜涓殑闂
-- 鉁?**鏂板姛鑳?* - 娣诲姞鏂扮殑鍔熻兘鐗规€?- 馃摑 **鏂囨。鏀硅繘** - 瀹屽杽鏂囨。璇存槑
-- 馃帹 **UI 浼樺寲** - 鏀硅繘鐢ㄦ埛鐣岄潰浣撻獙
-- 馃敡 **鎬ц兘浼樺寲** - 鎻愬崌搴旂敤鎬ц兘
+### 贡献类型
 
-### 浠ｇ爜瑙勮寖
+- 🐛 **Bug 修复** - 修复代码中的问题
+- ✨ **新功能** - 添加新的功能特性
+- 📝 **文档改进** - 完善文档说明
+- 🎨 **UI 优化** - 改进用户界面体验
+- ⚡ **性能优化** - 提升应用性能
 
-- 浣跨敤 TypeScript 缂栧啓浠ｇ爜
-- 閬靛惊 ESLint 浠ｇ爜瑙勮寖
-- 娣诲姞蹇呰鐨勬敞閲?- 鎻愪氦淇℃伅娓呮櫚鏄庣‘
+### 代码规范
+
+- 使用 TypeScript 编写代码
+- 遵循 ESLint 代码规范
+- 添加必要的注释
+- 提交信息清晰明确
 
 ---
 
-## 馃搵 API 鏂囨。
+## 📚 API 文档
 
-### 璁よ瘉鎺ュ彛
+### 认证接口
 
-| 鏂规硶 | 璺緞 | 璇存槑 |
+| 方法 | 路径 | 说明 |
 |------|------|------|
-| POST | `/api/auth/register` | 鐢ㄦ埛娉ㄥ唽 |
-| POST | `/api/auth/login` | 鐢ㄦ埛鐧诲綍 |
-| GET | `/api/auth/me` | 鑾峰彇褰撳墠鐢ㄦ埛淇℃伅 |
+| POST | `/api/auth/register` | 用户注册 |
+| POST | `/api/auth/login` | 用户登录 |
+| GET | `/api/auth/me` | 获取当前用户信息 |
 
-### 瀹犵墿鎺ュ彛
+### 宠物接口
 
-| 鏂规硶 | 璺緞 | 璇存槑 |
+| 方法 | 路径 | 说明 |
 |------|------|------|
-| GET | `/api/pets` | 鑾峰彇瀹犵墿鍒楄〃 |
-| POST | `/api/pets` | 鍒涘缓瀹犵墿淇℃伅 |
-| GET | `/api/pets/:id` | 鑾峰彇瀹犵墿璇︽儏 |
-| PUT | `/api/pets/:id` | 鏇存柊瀹犵墿淇℃伅 |
-| DELETE | `/api/pets/:id` | 鍒犻櫎瀹犵墿淇℃伅 |
+| GET | `/api/pets` | 获取宠物列表 |
+| POST | `/api/pets` | 创建宠物信息 |
+| GET | `/api/pets/:id` | 获取宠物详情 |
+| PUT | `/api/pets/:id` | 更新宠物信息 |
+| DELETE | `/api/pets/:id` | 删除宠物信息 |
 
-### 鍖婚櫌鎺ュ彛
+### 医院接口
 
-| 鏂规硶 | 璺緞 | 璇存槑 |
+| 方法 | 路径 | 说明 |
 |------|------|------|
-| GET | `/api/hospitals` | 鑾峰彇鍖婚櫌鍒楄〃 |
-| GET | `/api/hospitals/nearby` | 鑾峰彇闄勮繎鍖婚櫌 |
-| GET | `/api/hospitals/:id` | 鑾峰彇鍖婚櫌璇︽儏 |
+| GET | `/api/hospitals` | 获取医院列表 |
+| GET | `/api/hospitals/nearby` | 获取附近医院 |
+| GET | `/api/hospitals/:id` | 获取医院详情 |
 
-*(瀹屾暣 API 鏂囨。璇峰弬鑰冨悗绔唬鐮?*
+*(完整 API 文档请参考后端代码)*
 
 ---
 
-## 馃洝锔?瀹夊叏璇存槑
+## 🔒 安全说明
 
-鏈」鐩凡瀹炴柦浠ヤ笅瀹夊叏鎺柦锛?
-- 鉁?**JWT Token 璁よ瘉** - 瀹夊叏鐨勭敤鎴疯璇佹満鍒?- 鉁?**瀵嗙爜鍔犲瘑** - 浣跨敤 bcrypt 鍔犲瘑瀛樺偍瀵嗙爜
-- 鉁?**杈撳叆楠岃瘉** - 浣跨敤 express-validator 楠岃瘉鎵€鏈夎緭鍏?- 鉁?**CORS 閰嶇疆** - 闄愬埗璺ㄥ煙璇锋眰
-- 鉁?**Helmet 瀹夊叏澶?* - 璁剧疆 HTTP 瀹夊叏澶?- 鉁?**鍘嬬缉涓棿浠?* - 鍚敤 gzip 鍘嬬缉
+本项目已实施以下安全措施：
+- 🔐 **JWT Token 认证** - 安全的用户认证机制
+- 🔐 **密码加密** - 使用 bcrypt 加密存储密码
+- 🔐 **输入验证** - 使用 express-validator 验证所有输入
+- 🔐 **CORS 配置** - 限制跨域请求
+- 🔐 **Helmet 安全头** - 设置 HTTP 安全头
+- 🔐 **压缩中间件** - 启用 gzip 压缩
 
 ---
 
-## 馃摑 鏇存柊鏃ュ織
+## 📝 更新日志
 
 ### v0.1.0 (2026-10-22)
 
-**馃帀 棣栨鍙戝竷**
+**🎉 首次发布**
 
-- 鉁?瀹炵幇瀹犵墿棰嗗吇鍔熻兘
-- 鉁?瀹炵幇瀹犵墿鍖婚櫌鏌ヨ
-- 鉁?瀹炵幇娴佹氮鏁戝姪妯″潡
-- 鉁?瀹炵幇绀惧尯浜ゆ祦鍔熻兘
-- 鉁?闆嗘垚瀹炴椂娑堟伅鎺ㄩ€?- 鉁?瀹屾垚鐢ㄦ埛璁よ瘉绯荤粺
-- 鉁?鍝嶅簲寮忚璁￠€傞厤
-
----
-
-## 馃檹 鑷磋阿
-
-鎰熻阿浠ヤ笅寮€婧愰」鐩細
-
-- [Next.js](https://nextjs.org/) - React 妗嗘灦
-- [Express](https://expressjs.com/) - Node.js 妗嗘灦
-- [MongoDB](https://www.mongodb.com/) - 鏁版嵁搴?- [Socket.IO](https://socket.io/) - 瀹炴椂閫氫俊
-- [Tailwind CSS](https://tailwindcss.com/) - CSS 妗嗘灦
-- [React Bootstrap](https://react-bootstrap.github.io/) - UI 缁勪欢搴?
----
-
-## 馃搫 璁稿彲璇?
-鏈」鐩噰鐢?[MIT 璁稿彲璇乚(LICENSE)
+- ✨ 实现宠物领养功能
+- ✨ 实现宠物医院查询
+- ✨ 实现流浪救助模块
+- ✨ 实现社区交流功能
+- ✨ 集成实时消息推送
+- ✨ 完成用户认证系统
+- ✨ 响应式设计适配
 
 ---
 
-## 馃摟 鑱旂郴鏂瑰紡
+## 🙏 致谢
 
-- 浣滆€咃細shuangrui666
+感谢以下开源项目：
+
+- [Next.js](https://nextjs.org/) - React 框架
+- [Express](https://expressjs.com/) - Node.js 框架
+- [MongoDB](https://www.mongodb.com/) - 数据库
+- [Socket.IO](https://socket.io/) - 实时通信
+- [Tailwind CSS](https://tailwindcss.com/) - CSS 框架
+- [React Bootstrap](https://react-bootstrap.github.io/) - UI 组件库
+
+---
+
+## 📄 许可证
+
+本项目采用 [MIT 许可证](LICENSE)
+
+---
+
+## 📧 联系方式
+
+- 作者：shuangrui666
 - GitHub: [@shuangrui666](https://github.com/shuangrui666)
-- 椤圭洰浠撳簱锛歔https://github.com/shuangrui666/Pethome](https://github.com/shuangrui666/Pethome)
+- 项目仓库：[https://github.com/shuangrui666/Pethome](https://github.com/shuangrui666/Pethome)
 
 ---
 
 <div align="center">
 
-** Made with 鉂わ笍 for Pet Lovers **
+** Made with ❤️ for Pet Lovers **
 
-濡傛灉杩欎釜椤圭洰瀵逛綘鏈夊府鍔╋紝璇风粰涓€涓?猸?**Star** 鏀寔锛?
-[杩斿洖椤堕儴](#pethome---瀹犵墿瀹跺洯)
+如果这个项目对你有帮助，请给一个 ⭐ **Star** 支持！
+
+[返回顶部](#pethome---宠物家园)
 
 </div>
