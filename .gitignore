@@ -1,0 +1,24 @@
+# Ignore course work directories
+01-Field_Discovery/
+02-20Days_Challenge/
+03-AI_Collaboration/
+
+# Node modules
+node_modules/
+
+# Build outputs
+.next/
+out/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
