@@ -48,8 +48,6 @@
 - **LBS 位置服务** - 基于地理位置推荐附近的宠物医院、救助点
 - **实时消息推送** - 使用 Socket.IO 实现即时通讯功能
 - **安全可靠** - JWT 认证 + 数据加密 + 输入验证
-- **响应式设计** - 适配 PC 端和移动端，随时随地使用
-- **温馨界面** - 可爱温馨的设计风格，提升用户体验
 
 ---
 
@@ -57,54 +55,85 @@
 
 <div align="center">
 
-[首页]<img width="2206" height="1360" alt="image" src="https://github.com/user-attachments/assets/20361164-175c-41ff-bbaa-67b819c0095f" />
+<table>
+<tr>
+<td align="center">
+<h4>🏠 首页</h4>
+<p>精美首页展示，功能入口一目了然，快速导航至各个服务模块</p>
+<img src="https://github.com/user-attachments/assets/20361164-175c-41ff-bbaa-67b819c0095f" width="280" alt="首页"/>
+</td>
+<td align="center">
+<h4>📝 申请领养</h4>
+<p>在线提交领养申请，填写基本信息，等待审核反馈</p>
+<img src="https://github.com/user-attachments/assets/882ae3d7-2e17-4883-9875-25efd349ba59" width="280" alt="申请领养"/>
+</td>
+</tr>
 
+<tr>
+<td align="center">
+<h4>📢 走失宠物发布</h4>
+<p>发布走失宠物信息，上传照片和联系方式，扩大寻找范围</p>
+<img src="https://github.com/user-attachments/assets/7fe9ed4c-e20f-4181-8eec-da757b5a9d4c" width="280" alt="走失宠物发布"/>
+</td>
+<td align="center">
+<h4>🔍 走失宠物查询</h4>
+<p>查询附近走失宠物信息，提供线索帮助寻找</p>
+<img src="https://github.com/user-attachments/assets/61d029b7-4e84-48b8-916c-8cf6fd3d9efe" width="280" alt="走失宠物查询"/>
+</td>
+</tr>
 
-[功能模块]
-申请领养页面
-填写你的基本信息，我们会双向的帮助你与流浪动物选择适合彼此
-<img width="2208" height="1394" alt="image" src="https://github.com/user-attachments/assets/882ae3d7-2e17-4883-9875-25efd349ba59" />
+<tr>
+<td align="center">
+<h4>⏰ 防走丢提醒</h4>
+<p>设置宠物信息提醒，走失时及时接收通知</p>
+<img src="https://github.com/user-attachments/assets/f0cb40a0-5bdb-4a17-b16f-9e794fae9cd8" width="280" alt="防走丢提醒"/>
+</td>
+<td align="center">
+<h4>🎓 宠物幼儿园</h4>
+<p>宠物寄养服务，专业看护，让宠物安心度假</p>
+<img src="https://github.com/user-attachments/assets/46cb4001-e025-4380-8f0a-8985c4e651a1" width="280" alt="宠物幼儿园"/>
+</td>
+</tr>
 
+<tr>
+<td align="center">
+<h4>🛍️ 宠物店铺</h4>
+<p>在线购物平台，宠物用品一站式采购</p>
+<img src="https://github.com/user-attachments/assets/7d62b5f0-c3e5-4331-9045-ada979e3de89" width="280" alt="宠物店铺"/>
+</td>
+<td align="center">
+<h4>🤝 同城约伴</h4>
+<p>约附近宠友一起遛弯，宠物社交新方式</p>
+<img src="https://github.com/user-attachments/assets/dabc86cf-7f7a-4842-a651-a63ef1e5a154" width="280" alt="同城约伴"/>
+</td>
+</tr>
 
-发布走失宠物信息
-当你的宠物走丢时，您一定很着急。在这里，你可以发布你的宠物的基本信息，让更加多的人帮您寻回至亲的宠物。
-<img width="2358" height="1582" alt="image" src="https://github.com/user-attachments/assets/7fe9ed4c-e20f-4181-8eec-da757b5a9d4c" />
+<tr>
+<td align="center">
+<h4>💊 宠物医药</h4>
+<p>宠物药品查询，在线预约兽医咨询服务</p>
+<img src="https://github.com/user-attachments/assets/9e51e2a1-1adc-4c91-8a51-caab60b942a7" width="280" alt="宠物医药"/>
+</td>
+<td align="center">
+<h4>❤️ 宠物资助</h4>
+<p>为流浪动物提供物资援助，传递爱心</p>
+<img src="https://github.com/user-attachments/assets/d9ccafb5-3d31-479c-a0fc-e805cada435f" width="280" alt="宠物资助"/>
+</td>
+</tr>
 
-
-当然，在这里，你也可以看见那些走丢的宠物们。当你在路边看见他们时，请一定要联系他们的主人，帮助他们回家。
-<img width="2226" height="1426" alt="image" src="https://github.com/user-attachments/assets/61d029b7-4e84-48b8-916c-8cf6fd3d9efe" />
-
-
-防止宠物走丢
-在这个页面里，你可以看见你的宠物的活动范围。当它远离呢设定的范围时，你会收到警报，提醒你要注意啦！
-<img width="2256" height="1404" alt="image" src="https://github.com/user-attachments/assets/f0cb40a0-5bdb-4a17-b16f-9e794fae9cd8" />
-
-
-宠物幼儿园
-这里有全中国的宠物幼儿园，你可以挑选一家适合你家宠物的幼儿园。但是，请你放心。这些幼儿园都时有实时监控的，你可以随时查看您家宠物的情况。
-<img width="2268" height="1392" alt="屏幕截图 2026-10-22 193935" src="https://github.com/user-attachments/assets/46cb4001-e025-4380-8f0a-8985c4e651a1" /><img width="2272" height="1408" alt="屏幕截图 2026-10-22 194523" src="https://github.com/user-attachments/assets/14a11da8-7b6c-43ce-b8e0-6c30478014cd" />
-
-宠物店铺
-<img width="2294" height="1402" alt="image" src="https://github.com/user-attachments/assets/7d62b5f0-c3e5-4331-9045-ada979e3de89" />
-
-同城约伴
-<img width="2278" height="1426" alt="image" src="https://github.com/user-attachments/assets/dabc86cf-7f7a-4842-a651-a63ef1e5a154" />
-
-宠物医药
-<img width="2258" height="1430" alt="image" src="https://github.com/user-attachments/assets/9e51e2a1-1adc-4c91-8a51-caab60b942a7" />
-
-宠物资助
-<img width="2224" height="1400" alt="image" src="https://github.com/user-attachments/assets/d9ccafb5-3d31-479c-a0fc-e805cada435f" />
-
-训狗服务
-<img width="2234" height="1406" alt="image" src="https://github.com/user-attachments/assets/9eece611-a2f4-42b6-8826-ab6255a6e5f4" />
-
-养宠社区
-<img width="1912" height="1160" alt="屏幕截图 2026-10-22 202919" src="https://github.com/user-attachments/assets/7a43d621-c1fc-47c9-91ad-308307a97488" />
-
-
-
-
+<tr>
+<td align="center">
+<h4>🐕 训狗服务</h4>
+<p>专业训狗师在线指导，解决养狗难题</p>
+<img src="https://github.com/user-attachments/assets/9eece611-a2f4-42b6-8826-ab6255a6e5f4" width="280" alt="训狗服务"/>
+</td>
+<td align="center">
+<h4>💬 养宠社区</h4>
+<p>分享养宠经验，与众多宠友交流心得</p>
+<img src="https://github.com/user-attachments/assets/7a43d621-c1fc-47c9-91ad-308307a97488" width="280" alt="养宠社区"/>
+</td>
+</tr>
+</table>
 
 </div>
 
@@ -176,224 +205,121 @@ Pethome/
 │   ├── app/               # Next.js 14 App Router 路由
 │   │   ├── page.tsx       # 首页
 │   │   ├── adopt/         # 宠物领养页面
-│   │   ├── hospitals/     # 宠物医院页面
-│   │   ├── lost-found/    # 走失/寻回页面
-│   │   ├── community/     # 社区交流页面
-│   │   └── ...
+│   │   ├── hospital/      # 宠物医院页面
+│   │   └── community/     # 社区交流页面
 │   ├── components/        # React 组件
-│   ├── api/               # API 客户端
-│   ├── public/            # 静态资源
-│   └── netlify.toml       # Netlify 配置
-├── server/                # 后端 Node.js 项目
-│   ├── src/
-│   │   ├── controllers/   # 业务逻辑控制器
-│   │   │   ├── authController.ts
-│   │   │   ├── petController.ts
-│   │   │   ├── hospitalController.ts
-│   │   │   └── ...
-│   │   ├── models/        # MongoDB 数据模型
-│   │   │   ├── User.ts
-│   │   │   ├── Pet.ts
-│   │   │   ├── Hospital.ts
-│   │   │   └── ...
-│   │   ├── routes/        # API 路由
-│   │   ├── middleware/    # 中间件
-│   │   │   ├── auth.ts    # 认证中间件
-│   │   │   ├── upload.ts  # 文件上传中间件
-│   │   │   └── validation.ts
-│   │   └── index.ts       # 入口文件
-│   ├── scripts/           # 数据种子脚本
-│   ├── package.json
-│   └── tsconfig.json
-├── README.md              # 项目说明文档
-└── LICENSE               # BSD 许可证
+│   ├── lib/               # 工具函数和配置
+│   └── public/            # 静态资源
+├── server/                 # 后端 Node.js 项目
+│   ├── controllers/       # 业务逻辑
+│   ├── models/            # MongoDB 模型
+│   ├── routes/            # API 路由
+│   ├── middleware/        # 中间件
+│   └── utils/             # 工具函数
+└── README.md
 ```
 
 ---
 
 ## 快速开始
 
-### 前置要求
+### 环境要求
 
-- Node.js >= 18
-- MongoDB >= 6.0
+- Node.js >= 18.x
+- MongoDB >= 8.x
 - npm 或 yarn
 
-### 环境配置
+### 安装步骤
 
-#### 1. 克隆项目
-
+1. **克隆项目**
 ```bash
 git clone https://github.com/shuangrui666/Pethome.git
 cd Pethome
 ```
 
-#### 2. 后端配置
-
+2. **安装依赖**
 ```bash
-cd server
-
-# 安装依赖
+# 前端
+cd client
 npm install
 
-# 创建 .env 文件
-cat > .env << EOF
-PORT=5000
+# 后端
+cd ../server
+npm install
+```
+
+3. **配置环境变量**
+
+在项目根目录创建 `.env` 文件：
+
+```env
+# 数据库
 MONGODB_URI=mongodb://localhost:27017/pethome
+
+# JWT
 JWT_SECRET=your-secret-key-here
-NODE_ENV=development
-EOF
 
-# 启动开发服务器
-npm run dev
-
-# 初始化测试数据
-npm run seed:all
+# 端口
+PORT=5000
 ```
 
-#### 3. 前端配置
+4. **启动服务**
 
 ```bash
-cd ../client
+# 后端（终端 1）
+cd server
+npm run dev
 
-# 安装依赖
-npm install
-
-# 创建 .env.local 文件
-cat > .env.local << EOF
-NEXT_PUBLIC_API_URL=http://localhost:5000
-NEXT_PUBLIC_SOCKET_URL=http://localhost:5000
-EOF
-
-# 启动开发服务器
+# 前端（终端 2）
+cd client
 npm run dev
 ```
 
-#### 4. 访问应用
+5. **访问应用**
 
-打开浏览器访问：http://localhost:3000
+打开浏览器访问 `http://localhost:3000`
 
 ---
 
-## 部署说明
+## 功能说明
 
-### Netlify 部署（推荐）
+### 宠物领养
+- 浏览附近可领养的宠物
+- 在线提交领养申请
+- 领养进度追踪
 
-本项目已配置好 `netlify.toml`，支持一键部署：
+### 宠物医院
+- 基于 LBS 的附近医院查询
+- 医生在线预约
+- 病历管理和查询
 
-1. 将代码推送到 GitHub
-2. 在 Netlify 连接 GitHub 仓库
-3. 配置环境变量
-   - `NEXT_PUBLIC_API_URL` - 后端 API 地址
-   - `NEXT_PUBLIC_SOCKET_URL` - WebSocket 地址
-4. 自动构建并上线
+### 流浪救助
+- 流浪动物上报
+- 救助点信息展示
+- 捐赠和志愿者报名
 
-**当前部署状态：**
-- ✅ 已部署到 Netlify
-- 🌐 访问地址：https://dashing-sopapillas-03316d.netlify.app
+### 社区交流
+- 养宠经验分享
+- 宠物照片分享
+- 问答互动
 
 ---
 
 ## 贡献指南
 
-我们欢迎所有的贡献！无论是代码、文档、设计还是反馈，都非常感谢。
+欢迎贡献代码！请遵循以下步骤：
 
-### 贡献流程
+1. Fork 本仓库
+2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 开启 Pull Request
 
-1. **Fork** 本项目到你的 GitHub 账号
-2. **Clone** 项目到本地
-3. 创建你的 **Feature Branch**
-4. **Commit** 你的更改
-5. **Push** 到分支
-6. 开启一个 **Pull Request**
+### 开发规范
 
-### 贡献类型
-
-- **Bug 修复** - 修复代码中的问题
-- **新功能** - 添加新的功能特性
-- **文档改进** - 完善文档说明
-- **UI 优化** - 改进用户界面体验
-- **性能优化** - 提升应用性能
-
-### 代码规范
-
-- 使用 TypeScript 编写代码
-- 遵循 ESLint 代码规范
-- 添加必要的注释
-- 提交信息清晰明确
-
----
-
-## API 文档
-
-### 认证接口
-
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| POST | `/api/auth/register` | 用户注册 |
-| POST | `/api/auth/login` | 用户登录 |
-| GET | `/api/auth/me` | 获取当前用户信息 |
-
-### 宠物接口
-
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| GET | `/api/pets` | 获取宠物列表 |
-| POST | `/api/pets` | 创建宠物信息 |
-| GET | `/api/pets/:id` | 获取宠物详情 |
-| PUT | `/api/pets/:id` | 更新宠物信息 |
-| DELETE | `/api/pets/:id` | 删除宠物信息 |
-
-### 医院接口
-
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| GET | `/api/hospitals` | 获取医院列表 |
-| GET | `/api/hospitals/nearby` | 获取附近医院 |
-| GET | `/api/hospitals/:id` | 获取医院详情 |
-
-*(完整 API 文档请参考后端代码)*
-
----
-
-## 安全说明
-
-本项目已实施以下安全措施：
-- **JWT Token 认证** - 安全的用户认证机制
-- **密码加密** - 使用 bcrypt 加密存储密码
-- **输入验证** - 使用 express-validator 验证所有输入
-- **CORS 配置** - 限制跨域请求
-- **Helmet 安全头** - 设置 HTTP 安全头
-- **压缩中间件** - 启用 gzip 压缩
-
----
-
-## 更新日志
-
-### v0.1.0 (2026-10-22)
-
-**首次发布**
-
-- 实现宠物领养功能
-- 实现宠物医院查询
-- 实现流浪救助模块
-- 实现社区交流功能
-- 集成实时消息推送
-- 完成用户认证系统
-- 响应式设计适配
-
----
-
-## 致谢
-
-感谢以下开源项目：
-
-- [Next.js](https://nextjs.org/) - React 框架
-- [Express](https://expressjs.com/) - Node.js 框架
-- [MongoDB](https://www.mongodb.com/) - 数据库
-- [Socket.IO](https://socket.io/) - 实时通信
-- [Tailwind CSS](https://tailwindcss.com/) - CSS 框架
-- [React Bootstrap](https://react-bootstrap.github.io/) - UI 组件库
+- 遵循 [TypeScript](https://www.typescriptlang.org/) 类型规范
+- 使用 [ESLint](https://eslint.org/) 和 [Prettier](https://prettier.io/) 格式化代码
+- 提交信息遵循 [Conventional Commits](https://www.conventionalcommits.org/) 规范
 
 ---
 
@@ -406,17 +332,13 @@ npm run dev
 ## 联系方式
 
 - 作者：shuangrui666
+- Email: shuangrui666@gitee.com
 - GitHub: [@shuangrui666](https://github.com/shuangrui666)
-- 项目仓库：[https://github.com/shuangrui666/Pethome](https://github.com/shuangrui666/Pethome)
 
 ---
 
 <div align="center">
 
-**Made with ❤️ for Pet Lovers**
-
-如果这个项目对你有帮助，请给一个 **Star** 支持！
-
-[返回顶部](#pethome)
+**如果这个项目对你有帮助，请给一个 ⭐ Star！**
 
 </div>
