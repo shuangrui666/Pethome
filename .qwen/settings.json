@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(copy *)",
+      "Bash(git push)",
+      "Bash(curl *)",
+      "Bash(netsh *)",
+      "Read(E:\\client/**)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(cd *)",
+      "Bash(git status)",
+      "Bash(git diff *)"
+    ]
+  },
+  "$version": 4
+}
