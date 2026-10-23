@@ -1,48 +1,59 @@
-# 🏠 PetHome - 宠物家园
+# PetHome
 
 <div align="center">
 
 ![PetHome 封面](/public/cover.png)
 
-![PetHome Banner](https://img.shields.io/badge/PetHome-宠物家园 -FF6B9D?style=for-the-badge&logo=heart)
+<p>
+  <a href="https://dashing-sopapillas-03316d.netlify.app">
+    <img src="https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF%E8%AF%95%E7%8E%A9-%E7%82%B9%E5%87%BB%E8%AE%BF%E9%97%AE-0A66C2?style=for-the-badge" alt="在线演示">
+  </a>
+</p>
 
-**一站式宠物服务平台 · 连接爱宠人士 · 关爱流浪动物**
+<p>
+  <img src="https://img.shields.io/badge/Next.js-14.2-black?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js">
+  <img src="https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/MongoDB-8.0-green?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB">
+  <img src="https://img.shields.io/badge/Node.js-18+-green?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
+  <img src="https://img.shields.io/badge/license-BSD-blue?style=for-the-badge" alt="License">
+</p>
 
-[![License](https://img.shields.io/badge/license-BSD-blue.svg)](LICENSE)
-[![Next.js](https://img.shields.io/badge/Next.js-14.2-black?logo=next.js)](https://nextjs.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-18+-green?logo=node.js)](https://nodejs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-8.0-green?logo=mongodb)](https://www.mongodb.com/)
-
-[查看在线演示](https://dashing-sopapillas-03316d.netlify.app) | [报告 Bug](https://github.com/shuangrui666/Pethome/issues) | [贡献代码](#贡献指南)
+<p>
+  <a href="https://dashing-sopapillas-03316d.netlify.app">在线演示</a> •
+  <a href="#项目简介">项目简介</a> •
+  <a href="#快速开始">快速开始</a> •
+  <a href="#贡献指南">贡献指南</a>
+</p>
 
 </div>
 
 ---
 
-## 📖 项目简介
+## 项目简介
 
 **PetHome（宠物家园）** 是一款专为爱宠人士打造的一站式服务平台，致力于解决养宠过程中的各种痛点问题。无论是寻找领养、宠物医疗、流浪救助，还是分享养宠经验，PetHome 都能为您提供全方位的服务。
 
-### ✨ 核心功能
+### 核心功能
 
-| 🏠 宠物领养 | 🏥 宠物医院 | 🆘 流浪救助 | 💬 社区交流 |
-|:---:|:---:|:---:|:---:|
-| 寻找心仪宠物 | 附近医院查询 | 流浪动物救助 | 养宠经验分享 |
-| 领养申请流程 | 医生在线咨询 | 救助点管理 | 宠物社交互动 |
+| 功能 | 描述 |
+|------|------|
+| 宠物领养 | 寻找心仪宠物、领养申请流程 |
+| 宠物医院 | 附近医院查询、医生在线咨询 |
+| 流浪救助 | 流浪动物救助、救助点管理 |
+| 社区交流 | 养宠经验分享、宠物社交互动 |
 
-### 🎯 项目特色
+### 项目特色
 
-- 🐕 **全面的宠物服务** - 整合领养、医疗、救助、社交四大核心功能
-- 📍 **LBS 位置服务** - 基于地理位置推荐附近的宠物医院、救助点
-- 💬 **实时消息推送** - 使用 Socket.IO 实现即时通讯功能
-- 🔐 **安全可靠** - JWT 认证 + 数据加密 + 输入验证
-- 📱 **响应式设计** - 适配 PC 端和移动端，随时随地使用
-- 🎨 **温馨界面** - 可爱温馨的设计风格，提升用户体验
+- **全面的宠物服务** - 整合领养、医疗、救助、社交四大核心功能
+- **LBS 位置服务** - 基于地理位置推荐附近的宠物医院、救助点
+- **实时消息推送** - 使用 Socket.IO 实现即时通讯功能
+- **安全可靠** - JWT 认证 + 数据加密 + 输入验证
+- **响应式设计** - 适配 PC 端和移动端，随时随地使用
+- **温馨界面** - 可爱温馨的设计风格，提升用户体验
 
 ---
 
-## 🖼️ 项目截图
+## 项目截图
 
 <div align="center">
 
@@ -99,7 +110,7 @@
 
 ---
 
-## 🛠️ 技术架构
+## 技术架构
 
 ### 前端技术栈
 
@@ -157,7 +168,7 @@
 
 ---
 
-## 📂 项目目录
+## 项目目录
 
 ```
 Pethome/
@@ -200,7 +211,7 @@ Pethome/
 
 ---
 
-## 🚀 快速开始
+## 快速开始
 
 ### 前置要求
 
@@ -210,14 +221,14 @@ Pethome/
 
 ### 环境配置
 
-#### 1️⃣ 克隆项目
+#### 1. 克隆项目
 
 ```bash
 git clone https://github.com/shuangrui666/Pethome.git
 cd Pethome
 ```
 
-#### 2️⃣ 后端配置
+#### 2. 后端配置
 
 ```bash
 cd server
@@ -240,7 +251,7 @@ npm run dev
 npm run seed:all
 ```
 
-#### 3️⃣ 前端配置
+#### 3. 前端配置
 
 ```bash
 cd ../client
@@ -258,13 +269,13 @@ EOF
 npm run dev
 ```
 
-#### 4️⃣ 访问应用
+#### 4. 访问应用
 
 打开浏览器访问：http://localhost:3000
 
 ---
 
-## 📦 部署说明
+## 部署说明
 
 ### Netlify 部署（推荐）
 
@@ -283,7 +294,7 @@ npm run dev
 
 ---
 
-## 🤝 贡献指南
+## 贡献指南
 
 我们欢迎所有的贡献！无论是代码、文档、设计还是反馈，都非常感谢。
 
@@ -298,11 +309,11 @@ npm run dev
 
 ### 贡献类型
 
-- 🐛 **Bug 修复** - 修复代码中的问题
-- ✨ **新功能** - 添加新的功能特性
-- 📝 **文档改进** - 完善文档说明
-- 🎨 **UI 优化** - 改进用户界面体验
-- ⚡ **性能优化** - 提升应用性能
+- **Bug 修复** - 修复代码中的问题
+- **新功能** - 添加新的功能特性
+- **文档改进** - 完善文档说明
+- **UI 优化** - 改进用户界面体验
+- **性能优化** - 提升应用性能
 
 ### 代码规范
 
@@ -313,7 +324,7 @@ npm run dev
 
 ---
 
-## 📚 API 文档
+## API 文档
 
 ### 认证接口
 
@@ -345,35 +356,35 @@ npm run dev
 
 ---
 
-## 🔒 安全说明
+## 安全说明
 
 本项目已实施以下安全措施：
-- 🔐 **JWT Token 认证** - 安全的用户认证机制
-- 🔐 **密码加密** - 使用 bcrypt 加密存储密码
-- 🔐 **输入验证** - 使用 express-validator 验证所有输入
-- 🔐 **CORS 配置** - 限制跨域请求
-- 🔐 **Helmet 安全头** - 设置 HTTP 安全头
-- 🔐 **压缩中间件** - 启用 gzip 压缩
+- **JWT Token 认证** - 安全的用户认证机制
+- **密码加密** - 使用 bcrypt 加密存储密码
+- **输入验证** - 使用 express-validator 验证所有输入
+- **CORS 配置** - 限制跨域请求
+- **Helmet 安全头** - 设置 HTTP 安全头
+- **压缩中间件** - 启用 gzip 压缩
 
 ---
 
-## 📝 更新日志
+## 更新日志
 
 ### v0.1.0 (2026-10-22)
 
-**🎉 首次发布**
+**首次发布**
 
-- ✨ 实现宠物领养功能
-- ✨ 实现宠物医院查询
-- ✨ 实现流浪救助模块
-- ✨ 实现社区交流功能
-- ✨ 集成实时消息推送
-- ✨ 完成用户认证系统
-- ✨ 响应式设计适配
+- 实现宠物领养功能
+- 实现宠物医院查询
+- 实现流浪救助模块
+- 实现社区交流功能
+- 集成实时消息推送
+- 完成用户认证系统
+- 响应式设计适配
 
 ---
 
-## 🙏 致谢
+## 致谢
 
 感谢以下开源项目：
 
@@ -386,13 +397,13 @@ npm run dev
 
 ---
 
-## 📄 许可证
+## 许可证
 
 本项目采用 [BSD 许可证](LICENSE)
 
 ---
 
-## 📧 联系方式
+## 联系方式
 
 - 作者：shuangrui666
 - GitHub: [@shuangrui666](https://github.com/shuangrui666)
@@ -402,10 +413,10 @@ npm run dev
 
 <div align="center">
 
-** Made with ❤️ for Pet Lovers **
+**Made with ❤️ for Pet Lovers**
 
-如果这个项目对你有帮助，请给一个 ⭐ **Star** 支持！
+如果这个项目对你有帮助，请给一个 **Star** 支持！
 
-[返回顶部](#pethome---宠物家园)
+[返回顶部](#pethome)
 
 </div>
