@@ -19,8 +19,8 @@
 </p>
 
 <p>
-  <a href="https://dashing-sopapillas-03316d.netlify.app">在线演示</a> •
   <a href="#项目简介">项目简介</a> •
+  <a href="#项目当前状态">项目当前状态</a> •
   <a href="#快速开始">快速开始</a> •
   <a href="#贡献指南">贡献指南</a>
 </p>
