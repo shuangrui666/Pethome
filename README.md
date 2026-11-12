@@ -102,6 +102,106 @@ flowchart TB
 | 扩展服务方向 | 宠物幼儿园、宠物店铺、同城约伴、宠物服务/训练、资助、宠物医药、防走失提醒 | 仓库包含相应页面或模块代码；不据此宣称所有服务已上线 |
 | 平台基础能力 | 登录注册、个人资料、宠物档案、订单/预约等 | 以实际接口联调和运行测试结果为准 |
 
+### 智能项圈数据流图（未来目标数据链路）
+
+> **未来目标数据链路：** 本图描述智能项圈接入 PetHome 后，传感器数据从采集、传输、接收、存储、分析到网页展示的预期流程。当前仓库尚不能据此证明真实项圈、通信链路、设备数据接口或实时看板已经实现。
+
+```mermaid
+flowchart TB
+    subgraph DEVICE["第一层：宠物智能项圈（设备端）"]
+        S1["GPS / GNSS 定位数据"]
+        S2["IMU / 加速度与活动数据"]
+        S3["温度及其他经验证的健康传感器"]
+        S4["设备状态：电量 / 在线状态"]
+        MCU["项圈主控与固件"]
+        S1 --> MCU
+        S2 --> MCU
+        S3 --> MCU
+        S4 --> MCU
+        MCU --> PACK["数据整理、时间戳与设备标识"]
+    end
+
+    subgraph NETWORK["第二层：无线通信与数据传输"]
+        LINK["蓝牙 / Wi-Fi / 蜂窝网络等通信方式"]
+        GATEWAY["手机或网络网关（视设备方案选用）"]
+        SECURE["安全传输：设备认证 / 加密"]
+        LINK --> GATEWAY
+        GATEWAY --> SECURE
+    end
+
+    subgraph SERVER["第三层：PetHome 后端服务"]
+        API["设备数据接入 API"]
+        AUTH["设备身份验证与权限校验"]
+        VALID["数据格式、时间戳与有效性检查"]
+        QUEUE["数据缓冲 / 消息处理（按规模选用）"]
+        API --> AUTH --> VALID --> QUEUE
+    end
+
+    subgraph STORAGE["第四层：数据存储"]
+        DB1["设备与宠物绑定信息"]
+        DB2["位置与活动记录"]
+        DB3["健康及环境数据记录"]
+        DB4["设备状态与告警记录"]
+    end
+
+    subgraph ANALYSIS["第五层：数据处理与智能分析"]
+        PROC["数据清洗、单位统一与异常值处理"]
+        RULE["规则与阈值提醒"]
+        AI["AI 行为模式分析（需真实数据验证）"]
+        REPORT["趋势统计与报告生成"]
+        PROC --> RULE
+        PROC --> AI
+        PROC --> REPORT
+    end
+
+    subgraph APP["第六层：PetHome 网页 / 移动端展示"]
+        MAP["宠物位置地图与历史轨迹"]
+        DASH["活动与健康数据看板"]
+        ALERT["越界、设备离线或异常变化提醒"]
+        FILE["宠物健康档案与趋势报告"]
+    end
+
+    PACK --> LINK
+    SECURE --> API
+    QUEUE --> DB1
+    QUEUE --> DB2
+    QUEUE --> DB3
+    QUEUE --> DB4
+    DB1 --> PROC
+    DB2 --> PROC
+    DB3 --> PROC
+    DB4 --> PROC
+    RULE --> ALERT
+    AI --> DASH
+    AI --> ALERT
+    REPORT --> FILE
+    DB2 --> MAP
+    DB3 --> DASH
+    DB4 --> ALERT
+
+    classDef device fill:#eaf2ff,stroke:#477ac3,color:#17365d
+    classDef server fill:#e8f5ed,stroke:#38865a,color:#174b2c
+    classDef analysis fill:#f3eaff,stroke:#8554b5,color:#43236b
+    classDef app fill:#fff3df,stroke:#c28a35,color:#65420f
+    class S1,S2,S3,S4,MCU,PACK,LINK,GATEWAY,SECURE device
+    class API,AUTH,VALID,QUEUE,DB1,DB2,DB3,DB4 server
+    class PROC,RULE,AI,REPORT analysis
+    class MAP,DASH,ALERT,FILE app
+```
+
+**数据流关键说明：**
+
+1. **采集端：** 传感器由项圈主控读取；不同传感器需要分别验证测量精度、采样频率、佩戴位置和功耗。
+2. **通信端：** GPS/GNSS 负责获取定位信息，不负责把信息自动发送到网页。设备还需要可用的通信链路；可由手机网关转发，也可按方案使用 Wi-Fi 或蜂窝网络。
+3. **后端接入：** 后端需要识别设备身份、检查用户与宠物的绑定关系，并校验数据格式和时间戳，不能接受未经授权的设备数据。
+4. **数据存储：** 位置、活动、健康读数和设备状态应按数据类型管理，并保留时间信息；还需设计数据保留、删除和访问权限。
+5. **分析处理：** 先进行数据清洗和基础统计，再逐步研究规则提醒与 AI 分析。AI 结论必须经过真实数据评估，不能把简单阈值规则称为机器学习模型。
+6. **网页展示：** 网页通过经过授权的后端接口读取数据，并清楚标注数据更新时间、设备离线状态和定位精度等信息。
+
+**异常与降级场景：** 网络中断时，设备是否能够本地缓存并在恢复后补传，取决于硬件存储和固件设计；设备低电量、数据过期、定位失败或传感器异常时，界面应明确提示“暂不可用”或“数据已过期”，不能显示成实时数据。
+
+**健康安全边界：** 项圈温度读数不等于宠物核心体温；活动或健康传感器读数不能替代兽医检查和诊断。涉及心率、呼吸等指标时，必须先验证具体传感器在真实佩戴场景中的准确性。
+
 ### 网站功能模块图（现有代码方向与未来规划）
 
 > **阅读说明：** 此图根据仓库中可见的页面路由、API 和后端业务目录归纳。它展示的是项目功能组织方式，不代表每个模块都已完成前后端联调或通过验收。智能项圈、连续健康监测和 AI 分析属于未来规划。
