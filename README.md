@@ -125,70 +125,86 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-    subgraph INPUT["第一阶段：数据输入"]
-        I1["项圈 IMU / 加速度数据"]
-        I2["定位与活动记录"]
-        I3["经验证的健康 / 环境传感器数据"]
-        I4["主人主动记录：食欲 / 精神状态 / 日常观察"]
+    subgraph INPUT["第一阶段：多来源数据输入"]
+        I1["项圈 IMU / 加速度与活动数据"]
+        I2["定位轨迹 / 电子围栏事件"]
+        I3["走失宠物照片与档案特征"]
+        I4["社区目击线索：文字 / 时间 / 地点 / 图片"]
+        I5["主人记录：食欲 / 精神状态 / 日常观察"]
+        I6["宠物身份与家庭授权信息（权限校验后使用）"]
     end
 
-    subgraph PREP["第二阶段：数据预处理"]
-        P1["设备与宠物身份关联"]
-        P2["时间戳对齐 / 采样频率检查"]
-        P3["缺失值、噪声与异常值处理"]
-        P4["数据标准化与质量标记"]
+    subgraph PREP["第二阶段：数据预处理与隐私保护"]
+        P1["设备、宠物与数据来源关联"]
+        P2["时间戳、地点与记录格式统一"]
+        P3["缺失值、噪声与重复线索检查"]
+        P4["数据质量标记、脱敏与访问权限校验"]
         P1 --> P2 --> P3 --> P4
     end
 
     subgraph FEATURE["第三阶段：特征提取"]
-        F1["活动强度与持续时间"]
-        F2["静止 / 行走 / 奔跑等时序特征"]
-        F3["日常活动与休息节律"]
-        F4["个体历史基线与变化幅度"]
+        F1["活动强度、持续时间与行为时序特征"]
+        F2["个体日常活动 / 休息基线"]
+        F3["走失照片的外观特征"]
+        F4["目击线索的地点、时间与文本特征"]
+        F5["宠物个体档案与历史记录特征"]
     end
 
-    subgraph MODEL["第四阶段：分析与模型"]
-        R1["基础规则与阈值判断"]
-        M1["行为分类模型：需标注数据训练"]
-        M2["个体趋势 / 异常变化分析"]
-        M3["个性化建议生成与安全约束"]
-        M1 --> M2 --> M3
+    subgraph MODEL["第四阶段：AI 分析与业务规则"]
+        R1["电子围栏：按安全区域与定位规则判断越界"]
+        R2["家庭共享：按成员角色与授权规则控制访问"]
+        M1["行为分类辅助：需标注数据训练与验证"]
+        M2["活动趋势与异常变化辅助分析"]
+        M3["走失线索辅助匹配与候选排序"]
+        M4["个体化建议生成：展示依据并设置安全约束"]
+        M1 --> M2 --> M4
+        F3 --> M3
+        F4 --> M3
     end
 
-    subgraph OUTPUT["第五阶段：结果输出"]
-        O1["行为统计：活动 / 休息趋势"]
-        O2["异常变化提示：说明依据与时间范围"]
-        O3["个性化养宠建议：供主人参考"]
-        O4["健康档案与阶段报告"]
-        O5["必要时建议咨询兽医"]
+    subgraph OUTPUT["第五阶段：结果与人工确认"]
+        O1["活动 / 休息统计与趋势报告"]
+        O2["异常变化提示：展示依据、时间范围与不确定性"]
+        O3["走失线索候选列表：由主人或救助人员核实"]
+        O4["越界提醒：由电子围栏规则触发"]
+        O5["多宠物独立档案与家庭成员授权视图"]
+        O6["个性化养宠建议：仅供参考，必要时咨询兽医"]
     end
 
     INPUT --> PREP
     PREP --> FEATURE
-    FEATURE --> R1
     FEATURE --> M1
     FEATURE --> M2
-    R1 --> O2
+    FEATURE --> M3
+    FEATURE --> R1
+    FEATURE --> R2
+    R1 --> O4
+    R2 --> O5
+    M1 --> O1
     M2 --> O1
     M2 --> O2
     M3 --> O3
-    M2 --> O4
-    M3 --> O4
-    O2 --> O5
+    M4 --> O6
+
+    CARE["项圈舒适护理边界：主人手动控制；强度限制、定时停止与不适即停；AI 不自动启动按摩或触觉反馈"]
+    CARE -. "独立安全控制，不属于 AI 自动决策" .- O6
 
     EVAL["模型评估与持续改进：标注质量 / 准确率与召回率 / 误报漏报 / 不同宠物与场景验证"]
     M1 -.-> EVAL
     M2 -.-> EVAL
+    M3 -.-> EVAL
     EVAL -. "评估通过后再迭代" .-> M1
 
     classDef input fill:#eaf2ff,stroke:#477ac3,color:#17365d
     classDef prep fill:#e8f5ed,stroke:#38865a,color:#174b2c
     classDef model fill:#f3eaff,stroke:#8554b5,color:#43236b
     classDef output fill:#fff3df,stroke:#c28a35,color:#65420f
-    class I1,I2,I3,I4 input
-    class P1,P2,P3,P4,F1,F2,F3,F4 prep
-    class R1,M1,M2,M3,EVAL model
-    class O1,O2,O3,O4,O5 output
+    classDef boundary fill:#fff0f0,stroke:#c65b5b,color:#702b2b
+    class I1,I2,I3,I4,I5,I6 input
+    class P1,P2,P3,P4,F1,F2,F3,F4,F5 prep
+    class R1,R2,M1,M2,M3,M4,EVAL model
+    class O1,O2,O3,O4,O5,O6 output
+    class CARE boundary
 ```
 
 **研发原则与边界：**
