@@ -41,53 +41,70 @@
 flowchart TB
     A["PetHome 智能宠物生态系统"]
 
-    subgraph COLLAR["宠物智能项圈"]
+    subgraph COLLAR["宠物智能项圈（未来硬件）"]
         B1["GPS / GNSS 定位"]
         B2["IMU / 加速度计"]
-        B3["温度与健康传感器"]
-        B4["触觉反馈模块"]
+        B3["温度与经验证的健康传感器"]
+        B4["可控触觉反馈模块"]
+        B5["手动启停 / 强度限制 / 定时停止"]
+        B4 --> B5
     end
 
-    C["无线通信与数据传输"]
-    subgraph BACKEND["PetHome 后端服务"]
-        D1["设备管理"]
-        D2["数据接收与存储"]
-        D3["用户身份与权限"]
-        D4["消息与预警"]
+    C["无线通信与安全数据传输"]
+
+    subgraph BACKEND["PetHome 后端与物联网平台"]
+        D1["设备注册与宠物绑定"]
+        D2["数据接收、校验与存储"]
+        D3["账户身份、家庭角色与访问权限"]
+        D4["电子围栏规则与越界判断"]
+        D5["通知、走失事件与线索管理"]
+        D6["触觉反馈指令校验与设备状态记录"]
     end
 
-    subgraph WEB["PetHome 网页平台"]
-        E1["实时定位地图"]
-        E2["健康数据看板"]
-        E3["活动趋势分析"]
-        E4["走失预警"]
-        E5["宠物健康档案"]
-        E6["社区协同寻宠"]
+    subgraph WEB["PetHome 网页平台（未来目标功能）"]
+        E1["实时位置、最后定位与历史轨迹"]
+        E2["智能电子围栏 / 安全区域设置"]
+        E3["防走失提醒与走失事件发布"]
+        E4["社区协同寻宠 / 附近目击线索"]
+        E5["多宠物档案与统一管理"]
+        E6["家庭成员共享与分级权限"]
+        E7["健康数据看板与活动趋势"]
+        E8["宠物健康档案"]
+        E9["项圈舒适护理控制入口"]
     end
 
-    subgraph AI["AI 智能辅助"]
+    subgraph AI["AI 智能辅助（需真实数据训练与评估）"]
         F1["行为模式识别"]
-        F2["活动趋势分析"]
-        F3["异常变化提醒"]
-        F4["个性化养宠建议"]
+        F2["个体活动趋势分析"]
+        F3["异常活动变化辅助提醒"]
+        F4["走失图片与线索辅助匹配"]
+        F5["个性化养宠建议"]
     end
 
     A --> COLLAR
     B1 --> C
     B2 --> C
     B3 --> C
-    B4 --> C
+    B5 --> C
     C --> BACKEND
     BACKEND --> WEB
     BACKEND --> AI
     AI --> WEB
+    E2 --> D4
+    D4 --> D5
+    E3 --> D5
+    E4 --> D5
+    E5 --> D3
+    E6 --> D3
+    E9 --> D6
+    D6 -. "经授权的受限控制指令" .-> B4
 
     classDef planned fill:#eaf2ff,stroke:#477ac3,color:#17365d
     classDef platform fill:#e8f5ed,stroke:#38865a,color:#174b2c
     classDef aiNode fill:#f3eaff,stroke:#8554b5,color:#43236b
-    class B1,B2,B3,B4,C,D1,D2,D3,D4 planned
-    class E1,E2,E3,E4,E5,E6 platform
-    class F1,F2,F3,F4 aiNode
+    class B1,B2,B3,B4,B5,C,D1,D2,D3,D4,D5,D6 planned
+    class E1,E2,E3,E4,E5,E6,E7,E8,E9 platform
+    class F1,F2,F3,F4,F5 aiNode
 ```
 
 **数据链路说明：** 项圈传感器采集的数据需要经过通信链路传输至后端，再由后端按权限存储和提供给网页及 AI 服务。GPS 模块本身不会自动把位置发送到网页；实际通信方式、设备协议、数据安全和传感器准确性仍需后续设计与验证。
