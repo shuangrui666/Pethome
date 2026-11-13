@@ -41,7 +41,7 @@ PetHome 计划逐步建设为综合宠物服务平台，并在基础平台稳定
 |---|---|---|---|
 | 建立统一推进路线与状态入口 | 已建立 | 本文件 | 随审计结果持续更新 |
 | 仓库完整目录盘点 | 已完成（静态目录盘点） | 2026-11-13 获取 main 分支未截断递归目录树：332 条记录（235 文件、97 目录）；发现根目录与 client/ 存在 70 对对应文件，其中 69 对 SHA 相同 | 进入 4.2，确认正式前端入口；重复目录暂不删除 |
-| 正式前端入口确认 | 待审计 | README 技术说明提及 Next.js；根目录与其他前端目录的关系仍需核实 | 对照目录、package.json、构建配置和页面入口 |
+| 正式前端入口确认 | 进行中（静态代码核查已完成，实际部署配置待确认） | 根目录与 client/ 的 70 对对应文件中 69 对 SHA 相同；两边 package/lock/Next/TS 配置一致，但 Netlify 配置不同；README 声明目前无可核验部署记录 | 核对 Netlify Site configuration 的 Base directory、Build command、Publish directory 和配置文件位置，再确定正式入口 |
 | 后端与数据库核查 | 待审计 | README 提及 Node.js、Express/相关技术栈；实际服务入口、模型和连接配置需核实 | 检查服务端目录、依赖、路由、模型和环境变量读取方式 |
 | 功能实现状态核查 | 待审计 | README 和规划文档包含目标功能；不能据此认定业务已完成 | 按页面、API、数据模型和调用链逐项核对 |
 | 本地安装、构建与运行 | 待验证 | 当前没有纳入本文件的完整、可复核运行记录 | 在确认正式入口后执行并记录命令、环境、结果和错误 |
@@ -56,10 +56,10 @@ PetHome 计划逐步建设为综合宠物服务平台，并在基础平台稳定
 
 ### 4.1 仓库结构盘点
 
-- [ ] 获取主分支完整目录树。
-- [ ] 标记前端、后端、共享代码、配置、测试、文档、静态资源和脚本目录。
-- [ ] 识别重复目录、历史遗留目录、生成文件和疑似未使用文件。
-- [ ] 对不确定的目录先标记“待确认”，不直接删除。
+- [x] 获取主分支完整目录树。
+- [x] 初步标记前端、后端、共享代码、配置、文档、静态资源和脚本目录；独立测试目录仍需后续确认。
+- [x] 识别重复目录和待核查项：根目录与 client/ 前端重复；server/.qwen/ 项目记忆文件；根目录 test-ps.txt。
+- [x] 对不确定的目录先标记“待确认”，不直接删除。
 
 **产出：** 仓库结构清单和目录职责说明。第一轮静态盘点已完成；正式前端入口和重复目录的最终处置留待 4.2 核查。
 
@@ -79,12 +79,37 @@ PetHome 计划逐步建设为综合宠物服务平台，并在基础平台稳定
 
 ### 4.2 正式前端入口确认
 
-- [ ] 检查根目录及 `client/` 等候选目录。
-- [ ] 对比 `package.json`、锁文件、Next.js 配置、页面目录和构建脚本。
+- [x] 检查根目录及 `client/` 等候选目录。
+- [x] 对比 `package.json`、锁文件、Next.js 配置、页面目录和构建脚本。
 - [ ] 核实 Netlify 等部署配置实际指向哪个目录和构建产物。
 - [ ] 明确唯一正式前端入口；如存在多个应用，说明各自用途和关系。
 
 **产出：** 前端入口结论及对应文件证据。
+
+#### 4.2 第一轮静态配置核查（2026-11-13）
+
+**已核对文件与证据：**
+
+- `package.json` 与 `client/package.json`：SHA 相同；两者均为 `pethome-client`，Next.js `14.2.5`，构建脚本均为 `next build`。
+- `package-lock.json` 与 `client/package-lock.json`：SHA 相同，锁文件内容一致。
+- `next.config.js` 与 `client/next.config.js`：SHA 相同；均未配置 `output: "export"`，API 与 Socket 默认地址均为 localhost。
+- `tsconfig.json` 与 `client/tsconfig.json`：SHA 相同。
+- 根目录 `app/`、`src/`、`components/` 与 `client/` 下对应源码高度重复；70 对路径中 69 对 SHA 相同。
+- 根目录 `netlify.toml`：执行 `npm run build`，发布目录为 `out`，设置 `NEXT_EXPORT = "true"`。
+- `client/netlify.toml`：设置 `base = "client/"`，执行 `npm run build`，发布目录为 `client/.next`，并启用 `@netlify/plugin-nextjs`。
+- `README.md` 的演示说明称，当前没有可核验的 Netlify 部署记录，因此没有提供在线演示入口。
+- GitHub 仓库元数据没有设置 homepage，GitHub Pages 未启用；当前 main 提交未发现 GitHub Actions workflow runs 或 commit check runs。这些只能说明本轮可见的 GitHub 证据，不代表 Netlify 账户内不存在站点或部署。
+
+**初步风险判断：**
+
+1. 两套前端代码几乎重复，存在后续分别修改导致版本分叉的维护风险。
+2. 根目录 Netlify 配置的 `publish = "out"` 与当前 `next.config.js` 的内容存在疑点：配置中没有声明静态导出，单纯执行 `next build` 通常生成 `.next`，而不是 `out`。需通过本地构建验证，不能仅凭静态配置直接判定构建必然失败。
+3. `client/netlify.toml` 使用 Next.js Netlify 插件，与根目录静态发布配置是两种不同部署方式；实际生效配置取决于 Netlify 站点设置和配置文件选择，不能仅凭仓库同时存在两份文件推断。
+4. 因未取得 Netlify Site configuration / Deploy log，本轮尚不能确认线上站点的 Base directory、Build command、Publish directory、配置文件位置及最近部署提交。
+
+**本轮结论：** 已完成代码仓库层面的静态比对，但尚不能决定根目录或 `client/` 哪一个是正式前端，也不能确认 Netlify 实际使用哪份配置。暂不删除、移动或重命名任何文件。
+
+**需要补充的唯一外部证据：** 打开 Netlify 对应 PetHome Site 的 `Site configuration`（或 `Build & deploy`）页面，核对并提供以下四项当前值：`Base directory`、`Build command`、`Publish directory`、`Configuration file`（如页面显示）。如果方便，再提供最近一次 Deploy 的 commit 和日志结果。
 
 ### 4.3 后端与数据库核查
 
@@ -188,8 +213,9 @@ PetHome 计划逐步建设为综合宠物服务平台，并在基础平台稳定
 | 日期 | 更新内容 |
 |---|---|
 | 2026-11-13 | 建立统一项目推进路线与状态总表；明确当前主线为第一阶段工程审计。 |
-| 2026-11-13 | 完成第一轮静态目录盘点，记录根目录与 client/ 重复前端及部署配置差异；下一步转入 4.2 正式前端入口确认。 |
+| 2026-11-13 | 完成第一轮静态目录盘点，记录根目录与 client/ 重复前端及部署配置差异；进入 4.2 正式前端入口确认。 |
+| 2026-11-13 | 完成 4.2 第一轮静态配置比对；根目录与 client/ 前端配置高度相同但 Netlify 配置不同；实际 Netlify 站点设置待用户核对，暂不删除或移动文件。 |
 
 ---
 
-**当前唯一下一步：** 完成第一阶段第 4.2 项“正式前端入口确认”，重点核实根目录与 `client/` 哪一套是实际使用的前端及部署入口。
+**当前唯一下一步：** 在 Netlify 的 PetHome Site configuration 中核对 Base directory、Build command、Publish directory 和 Configuration file，以确定实际部署入口；在此之前不删除或移动根目录与 `client/` 文件。
