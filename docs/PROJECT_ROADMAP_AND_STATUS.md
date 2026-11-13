@@ -41,7 +41,7 @@ PetHome 计划逐步建设为综合宠物服务平台，并在基础平台稳定
 |---|---|---|---|
 | 建立统一推进路线与状态入口 | 已建立 | 本文件 | 随审计结果持续更新 |
 | 仓库完整目录盘点 | 已完成（静态目录盘点） | 2026-11-13 获取 main 分支未截断递归目录树：332 条记录（235 文件、97 目录）；发现根目录与 client/ 存在 70 对对应文件，其中 69 对 SHA 相同 | 进入 4.2，确认正式前端入口；重复目录暂不删除 |
-| 正式前端入口确认 | 进行中（静态代码核查已完成，实际部署配置待确认） | 根目录与 client/ 的 70 对对应文件中 69 对 SHA 相同；两边 package/lock/Next/TS 配置一致，但 Netlify 配置不同；README 声明目前无可核验部署记录 | 核对 Netlify Site configuration 的 Base directory、Build command、Publish directory 和配置文件位置，再确定正式入口 |
+| 正式前端入口确认 | 进行中（根目录为当前配置候选，尚待本地构建验证） | 根目录与 client/ 的 70 对对应文件中 69 对 SHA 相同；两边 package/lock/Next/TS 配置一致；用户于 2026-11-12 提供的 Netlify 设置为 Base directory=/、Build command/Publish directory=Not set，站点尚未部署；根目录 netlify.toml 因此是当前默认配置候选 | 在本地分别核查根目录 Next.js 构建产物与 Netlify 配置匹配性；部署前确定是否保留根目录为唯一入口 |
 | 后端与数据库核查 | 待审计 | README 提及 Node.js、Express/相关技术栈；实际服务入口、模型和连接配置需核实 | 检查服务端目录、依赖、路由、模型和环境变量读取方式 |
 | 功能实现状态核查 | 待审计 | README 和规划文档包含目标功能；不能据此认定业务已完成 | 按页面、API、数据模型和调用链逐项核对 |
 | 本地安装、构建与运行 | 待验证 | 当前没有纳入本文件的完整、可复核运行记录 | 在确认正式入口后执行并记录命令、环境、结果和错误 |
@@ -109,7 +109,20 @@ PetHome 计划逐步建设为综合宠物服务平台，并在基础平台稳定
 
 **本轮结论：** 已完成代码仓库层面的静态比对，但尚不能决定根目录或 `client/` 哪一个是正式前端，也不能确认 Netlify 实际使用哪份配置。暂不删除、移动或重命名任何文件。
 
-**需要补充的唯一外部证据：** 打开 Netlify 对应 PetHome Site 的 `Site configuration`（或 `Build & deploy`）页面，核对并提供以下四项当前值：`Base directory`、`Build command`、`Publish directory`、`Configuration file`（如页面显示）。如果方便，再提供最近一次 Deploy 的 commit 和日志结果。
+**已补充的 Netlify 站点设置证据（来自用户 2026-11-12 对话）：**
+
+- Base directory：`/`。
+- Build command：`Not set`（界面未单独设置）。
+- Publish directory：`Not set`（界面未单独设置）。
+- Functions directory：`netlify/functions`。
+- Runtime / Package directory：`Not set`。
+- 站点界面显示尚未部署（Project has not yet been deployed），因此没有真实 Deploy commit 或构建日志可供核验。
+- 因 Base directory 指向仓库根目录，且界面未单独覆盖构建与发布命令，仓库根目录的 `netlify.toml` 是当前默认配置候选；`client/netlify.toml` 不应在没有显式配置文件路径或 base 设置证据时被认定为实际生效配置。
+- 以上 Netlify 界面信息来自用户此前提供的记录；本次没有直接读取用户 Netlify 账户，也没有实际部署验证。
+
+**当前判断：** 根目录是目前最有依据的项目工作入口和 Netlify 配置候选；但这不是部署成功证明。根目录 `netlify.toml` 的 `publish = "out"` 与 `next.config.js` 未声明 `output: "export"` 存在潜在不匹配。下一步需要在本地对根目录执行构建，检查是否生成 `out/`；同时确认 Netlify 的实际配置文件路径（如界面有此项）。在此之前不删除或移动 `client/`。
+
+**4.2 剩余验收：** 本地构建与输出目录核对；之后再决定是否将根目录确定为唯一正式前端入口。
 
 ### 4.3 后端与数据库核查
 
@@ -214,8 +227,8 @@ PetHome 计划逐步建设为综合宠物服务平台，并在基础平台稳定
 |---|---|
 | 2026-11-13 | 建立统一项目推进路线与状态总表；明确当前主线为第一阶段工程审计。 |
 | 2026-11-13 | 完成第一轮静态目录盘点，记录根目录与 client/ 重复前端及部署配置差异；进入 4.2 正式前端入口确认。 |
-| 2026-11-13 | 完成 4.2 第一轮静态配置比对；根目录与 client/ 前端配置高度相同但 Netlify 配置不同；实际 Netlify 站点设置待用户核对，暂不删除或移动文件。 |
+| 2026-11-13 | 完成 4.2 第一轮静态配置比对；根目录与 client/ 前端配置高度相同但 Netlify 配置不同。结合用户 2026-11-12 提供的 Netlify 设置（Base directory=/，Build/Publish 未单独设置，站点尚未部署），根目录为当前默认配置候选；待本地构建验证。 |
 
 ---
 
-**当前唯一下一步：** 在 Netlify 的 PetHome Site configuration 中核对 Base directory、Build command、Publish directory 和 Configuration file，以确定实际部署入口；在此之前不删除或移动根目录与 `client/` 文件。
+**当前唯一下一步：** 在本地仓库根目录执行一次前端构建，检查构建是否成功及是否生成 `out/`，以验证根目录 `netlify.toml` 的发布目录配置；不要删除或移动 `client/`。
