@@ -385,88 +385,112 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-    U["用户 / 宠物主人 / 领养人 / 救助参与者"]
-    U --> A["账户与个人中心"]
-    U --> P["宠物管理"]
-    U --> B["宠物服务与业务"]
-    U --> C["社区互动"]
-    U --> F["平台基础能力"]
+    USER["用户：宠物主人 / 领养人 / 救助参与者"]
+    USER --> ACCOUNT
+    USER --> PET
+    USER --> SERVICE
+    USER --> COMMUNITY
+    USER --> DEVICE
 
-    subgraph ACCOUNT["账户与个人中心"]
+    subgraph ACCOUNT["一、账户与个人中心"]
         A1["注册 / 登录"]
         A2["个人资料与隐私设置"]
         A3["通知 / 我的预约 / 我的订单"]
+        A4["家庭成员邀请与共享管理（规划扩展）"]
+        A5["角色与访问权限设置（规划扩展）"]
+        A1 --> A2
+        A2 --> A3
+        A2 --> A4 --> A5
     end
-    A --> A1
-    A --> A2
-    A --> A3
 
-    subgraph PET["宠物管理"]
+    subgraph PET["二、宠物档案与管理"]
         P1["我的宠物 / 宠物档案"]
         P2["宠物资料维护"]
         P3["领养申请与记录"]
+        P4["多宠物统一管理（规划扩展）"]
+        P5["宠物与智能项圈绑定（规划扩展）"]
+        P1 --> P2
+        P1 --> P3
+        P1 --> P4
+        P1 --> P5
     end
-    P --> P1
-    P --> P2
-    P --> P3
 
-    subgraph SERVICE["宠物服务与业务"]
-        B1["宠物领养"]
-        B2["医疗服务与预约"]
-        B3["走失发布与寻回"]
-        B4["流浪动物救助 / 资助"]
-        B5["宠物幼儿园与寄养"]
-        B6["宠物店铺与用品"]
-        B7["训练 / 专业服务"]
-        B8["同城约伴"]
+    subgraph SERVICE["三、宠物服务与业务"]
+        S1["宠物领养"]
+        S2["医疗服务与预约"]
+        S3["走失发布与寻回"]
+        S4["流浪动物救助 / 资助"]
+        S5["宠物幼儿园与寄养"]
+        S6["宠物店铺与用品"]
+        S7["训练 / 专业服务"]
+        S8["同城约伴"]
     end
-    B --> B1
-    B --> B2
-    B --> B3
-    B --> B4
-    B --> B5
-    B --> B6
-    B --> B7
-    B --> B8
 
-    subgraph COMMUNITY["社区互动"]
+    subgraph COMMUNITY["四、社区互动与协同寻宠"]
         C1["动态发布"]
         C2["宠物相关内容交流"]
-        C3["社交与互动"]
-        C4["寻宠线索协作（规划深化）"]
+        C3["评论 / 点赞 / 社交互动"]
+        C4["走失事件信息共享（规划深化）"]
+        C5["附近目击线索提交（规划深化）"]
+        C6["线索核实与协作跟进（规划深化）"]
+        C7["位置分享范围与主人授权"]
+        C4 --> C5 --> C7 --> C6
     end
-    C --> C1
-    C --> C2
-    C --> C3
-    C --> C4
 
-    subgraph PLATFORM["平台基础能力"]
+    subgraph DEVICE["五、智能项圈与宠物安全（未来规划）"]
+        D1["设备绑定与在线状态"]
+        D2["实时定位 / 最后可信位置"]
+        D3["历史活动轨迹"]
+        D4["智能电子围栏"]
+        D5["越界判断与异常提醒"]
+        D6["活动 / 温度等传感数据"]
+        D7["项圈舒适护理控制"]
+        D8["主人手动启动 / 强度限制 / 定时停止"]
+        D1 --> D2
+        D2 --> D3
+        D2 --> D4 --> D5
+        D1 --> D6
+        D7 --> D8
+    end
+
+    subgraph AI["六、AI 辅助分析（未来规划）"]
+        AI1["行为模式辅助识别"]
+        AI2["个体活动趋势分析"]
+        AI3["异常变化提示"]
+        AI4["走失照片与线索辅助匹配"]
+        AI5["养宠信息辅助建议"]
+        AI1 --> AI2 --> AI3
+        AI4 --> AI5
+    end
+
+    subgraph PLATFORM["七、平台基础能力（实现情况需逐项验收）"]
         F1["前端页面与交互"]
         F2["业务 API 与后端服务"]
-        F3["身份认证与权限控制"]
-        F4["数据存储与文件上传"]
-        F5["消息 / 实时通信（待逐项验证）"]
+        F3["身份认证 / 角色权限控制"]
+        F4["数据库与文件存储"]
+        F5["消息通知 / 实时通信"]
+        F6["设备数据接入与状态管理（规划扩展）"]
+        F7["操作记录 / 隐私与安全控制"]
     end
-    F --> F1
-    F --> F2
-    F --> F3
-    F --> F4
-    F --> F5
 
-    subgraph FUTURE["未来扩展：智能项圈与 AI"]
-        G1["设备绑定与定位地图"]
-        G2["活动趋势与健康数据看板"]
-        G3["电子围栏与异常提醒"]
-        G4["AI 行为分析与养宠建议"]
-    end
-    P1 -. "未来扩展" .-> FUTURE
+    A5 -. "权限校验" .-> P4
+    A5 -. "按角色授权" .-> C7
+    P5 -. "绑定关系" .-> D1
+    S3 -. "发布走失事件" .-> C4
+    D2 -. "可信位置" .-> C4
+    D5 -. "告警通知" .-> A3
+    D6 -. "分析数据" .-> AI1
+    C5 -. "线索数据" .-> AI4
+    D8 -. "受控指令" .-> D7
 
-    classDef current fill:#e8f5ed,stroke:#38865a,color:#174b2c
+    classDef business fill:#e8f5ed,stroke:#38865a,color:#174b2c
     classDef foundation fill:#eaf2ff,stroke:#477ac3,color:#17365d
-    classDef future fill:#f3eaff,stroke:#8554b5,color:#43236b
-    class A1,A2,A3,P1,P2,P3,B1,B2,B3,B4,B5,B6,B7,B8,C1,C2,C3 current
-    class F1,F2,F3,F4,F5 foundation
-    class C4,G1,G2,G3,G4 future
+    classDef planned fill:#f3eaff,stroke:#8554b5,color:#43236b
+    classDef safety fill:#fff0f0,stroke:#c65b5b,color:#702b2b
+    class A1,A2,A3,P1,P2,P3,S1,S2,S3,S4,S5,S6,S7,S8,C1,C2,C3 business
+    class F1,F2,F3,F4,F5,F7 foundation
+    class A4,A5,P4,P5,C4,C5,C6,C7,D1,D2,D3,D4,D5,D6,D7,D8,F6,AI1,AI2,AI3,AI4,AI5 planned
+    class D4,D5,D7,D8 safety
 ```
 
 **模块说明：**
