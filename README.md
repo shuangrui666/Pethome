@@ -223,84 +223,147 @@ flowchart TB
 ```mermaid
 flowchart TB
     subgraph DEVICE["第一层：宠物智能项圈（设备端）"]
-        S1["GPS / GNSS 定位数据"]
-        S2["IMU / 加速度与活动数据"]
-        S3["温度及其他经验证的健康传感器"]
-        S4["设备状态：电量 / 在线状态"]
+        GPS["GPS / GNSS 定位"]
+        IMU["IMU / 加速度与活动数据"]
+        TEMP["温度及其他经验证的传感器"]
+        STATUS["设备状态：电量 / 在线状态"]
         MCU["项圈主控与固件"]
-        S1 --> MCU
-        S2 --> MCU
-        S3 --> MCU
-        S4 --> MCU
-        MCU --> PACK["数据整理、时间戳与设备标识"]
+        PACK["数据整理：设备 ID / 宠物 ID / 时间戳"]
+        HAPTIC["触觉反馈执行模块"]
+        GPS --> MCU
+        IMU --> MCU
+        TEMP --> MCU
+        STATUS --> MCU
+        MCU --> PACK
     end
 
-    subgraph NETWORK["第二层：无线通信与数据传输"]
-        LINK["蓝牙 / Wi-Fi / 蜂窝网络等通信方式"]
-        GATEWAY["手机或网络网关（视设备方案选用）"]
-        SECURE["安全传输：设备认证 / 加密"]
-        LINK --> GATEWAY
-        GATEWAY --> SECURE
+    subgraph NETWORK["第二层：无线通信与安全传输"]
+        LINK["蓝牙 / Wi-Fi / 蜂窝网络（按设备方案选用）"]
+        GATEWAY["手机或网络网关（如需）"]
+        SECURE["设备认证与加密传输"]
+        PACK --> LINK --> GATEWAY --> SECURE
     end
 
     subgraph SERVER["第三层：PetHome 后端服务"]
         API["设备数据接入 API"]
-        AUTH["设备身份验证与权限校验"]
-        VALID["数据格式、时间戳与有效性检查"]
-        QUEUE["数据缓冲 / 消息处理（按规模选用）"]
-        API --> AUTH --> VALID --> QUEUE
+        AUTH["身份验证：设备 / 用户 / 宠物绑定"]
+        VALID["数据校验：格式 / 时间戳 / 有效性"]
+        ROUTER["业务事件分发"]
+        SECURE --> API --> AUTH --> VALID --> ROUTER
     end
 
     subgraph STORAGE["第四层：数据存储"]
-        DB1["设备与宠物绑定信息"]
-        DB2["位置与活动记录"]
-        DB3["健康及环境数据记录"]
-        DB4["设备状态与告警记录"]
+        DBPET["宠物与设备绑定信息"]
+        DBLOC["位置与历史轨迹"]
+        DBACT["活动与健康数据"]
+        DBFAMILY["家庭成员 / 角色 / 授权关系"]
+        DBEVENT["围栏事件 / 走失事件 / 目击线索"]
+        DBDEVICE["设备状态 / 控制记录"]
     end
 
-    subgraph ANALYSIS["第五层：数据处理与智能分析"]
-        PROC["数据清洗、单位统一与异常值处理"]
-        RULE["规则与阈值提醒"]
-        AI["AI 行为模式分析（需真实数据验证）"]
-        REPORT["趋势统计与报告生成"]
-        PROC --> RULE
-        PROC --> AI
-        PROC --> REPORT
+    ROUTER --> DBPET
+    ROUTER --> DBLOC
+    ROUTER --> DBACT
+    ROUTER --> DBDEVICE
+
+    subgraph SERVICES["第五层：平台业务规则与智能分析"]
+        subgraph SAFETY["A. 防走失与智能电子围栏（规则服务）"]
+            GEO["定位质量与可信度检查"]
+            FENCE["主人设置的安全区域"]
+            CROSS["越界规则判断"]
+            ALERT["生成越界事件与通知"]
+            GEO --> CROSS
+            FENCE --> CROSS --> ALERT
+        end
+
+        subgraph FAMILY["B. 多宠物与家庭共享（权限服务）"]
+            OWNER["主人账户与家庭成员"]
+            ROLE["角色 / 宠物范围 / 操作权限"]
+            ACCESS["访问授权校验"]
+            OWNER --> ROLE --> ACCESS
+        end
+
+        subgraph LOST["C. 社区协同寻宠"]
+            LOSTPOST["主人发布走失事件"]
+            LASTLOC["最后一次可信位置与时间"]
+            CLUE["附近用户提交目击线索"]
+            CONSENT["主人授权与隐私范围检查"]
+            MATCH["线索整理与辅助匹配"]
+            HUMAN["主人 / 救助人员人工核实"]
+            LOSTPOST --> LASTLOC
+            CLUE --> CONSENT --> MATCH --> HUMAN
+        end
+
+        subgraph AI["D. AI 辅助分析（需真实数据训练与评估）"]
+            CLEAN["数据清洗与特征处理"]
+            BEHAVIOR["行为模式辅助识别"]
+            TREND["个体活动趋势与异常变化"]
+            AIHINT["走失照片 / 线索辅助匹配"]
+            CLEAN --> BEHAVIOR --> TREND
+            CLEAN --> AIHINT
+        end
+
+        subgraph CARE["E. 项圈舒适护理（独立安全控制）"]
+            MANUAL["主人在授权界面手动发起"]
+            CHECK["权限 / 设备在线 / 安全条件校验"]
+            LIMIT["限制强度与最长持续时间"]
+            CMD["发送受限控制指令"]
+            ACK["设备确认并回报执行状态"]
+            STOP["到时停止 / 主人停止 / 异常立即停止"]
+            MANUAL --> CHECK --> LIMIT --> CMD --> ACK --> STOP
+        end
     end
 
-    subgraph APP["第六层：PetHome 网页 / 移动端展示"]
-        MAP["宠物位置地图与历史轨迹"]
+    DBLOC --> GEO
+    DBPET --> FENCE
+    ALERT --> DBEVENT
+    DBFAMILY --> ACCESS
+    DBPET --> ACCESS
+    ACCESS --> LOSTPOST
+    DBLOC --> LASTLOC
+    CLUE --> DBEVENT
+    CONSENT --> DBFAMILY
+    DBLOC --> CLEAN
+    DBACT --> CLEAN
+    DBPET --> CLEAN
+    DBEVENT --> AIHINT
+    DBDEVICE --> CHECK
+    CMD --> HAPTIC
+    HAPTIC --> ACK
+    STOP --> DBDEVICE
+
+    subgraph APP["第六层：PetHome 网页 / 移动端"]
+        MAP["实时位置 / 最后可信位置 / 历史轨迹"]
+        GEOFENCEUI["安全区域设置与越界通知"]
+        PETUI["多宠物档案与统一管理"]
+        FAMILYUI["家庭成员共享视图（按权限展示）"]
+        LOSTUI["走失事件 / 附近目击线索"]
         DASH["活动与健康数据看板"]
-        ALERT["越界、设备离线或异常变化提醒"]
-        FILE["宠物健康档案与趋势报告"]
+        CAREUI["主人手动护理控制与停止入口"]
     end
 
-    PACK --> LINK
-    SECURE --> API
-    QUEUE --> DB1
-    QUEUE --> DB2
-    QUEUE --> DB3
-    QUEUE --> DB4
-    DB1 --> PROC
-    DB2 --> PROC
-    DB3 --> PROC
-    DB4 --> PROC
-    RULE --> ALERT
-    AI --> DASH
-    AI --> ALERT
-    REPORT --> FILE
-    DB2 --> MAP
-    DB3 --> DASH
-    DB4 --> ALERT
+    DBLOC --> MAP
+    ALERT --> GEOFENCEUI
+    DBPET --> PETUI
+    ACCESS --> FAMILYUI
+    DBEVENT --> LOSTUI
+    TREND --> DASH
+    HUMAN --> LOSTUI
+    CAREUI --> MANUAL
+    STOP --> CAREUI
 
     classDef device fill:#eaf2ff,stroke:#477ac3,color:#17365d
-    classDef server fill:#e8f5ed,stroke:#38865a,color:#174b2c
-    classDef analysis fill:#f3eaff,stroke:#8554b5,color:#43236b
-    classDef app fill:#fff3df,stroke:#c28a35,color:#65420f
-    class S1,S2,S3,S4,MCU,PACK,LINK,GATEWAY,SECURE device
-    class API,AUTH,VALID,QUEUE,DB1,DB2,DB3,DB4 server
-    class PROC,RULE,AI,REPORT analysis
-    class MAP,DASH,ALERT,FILE app
+    classDef network fill:#e8f5ed,stroke:#38865a,color:#174b2c
+    classDef server fill:#f3eaff,stroke:#8554b5,color:#43236b
+    classDef rule fill:#fff3df,stroke:#c28a35,color:#65420f
+    classDef app fill:#e8f5ed,stroke:#38865a,color:#174b2c
+    classDef safety fill:#fff0f0,stroke:#c65b5b,color:#702b2b
+    class GPS,IMU,TEMP,STATUS,MCU,PACK,HAPTIC device
+    class LINK,GATEWAY,SECURE network
+    class API,AUTH,VALID,ROUTER,DBPET,DBLOC,DBACT,DBFAMILY,DBEVENT,DBDEVICE server
+    class GEO,FENCE,CROSS,ALERT,OWNER,ROLE,ACCESS,LOSTPOST,LASTLOC,CLUE,CONSENT,MATCH,HUMAN,CLEAN,BEHAVIOR,TREND,AIHINT rule
+    class MANUAL,CHECK,LIMIT,CMD,ACK,STOP safety
+    class MAP,GEOFENCEUI,PETUI,FAMILYUI,LOSTUI,DASH,CAREUI app
 ```
 
 **数据流关键说明：**
