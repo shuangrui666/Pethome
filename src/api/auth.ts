@@ -77,7 +77,7 @@ export const verifyIdentity = async (data: {
   idCardFront: string
   idCardBack: string
 }) => {
-  const response = await api.post('/auth/verify', data)
+  const response = await api.post('/auth/verify-realname', data)
   return response.data
 }
 
