@@ -48,16 +48,7 @@ router.put('/profile', authenticate, updateProfileValidations, validate(updatePr
 // 上传头像 (需要认证)
 router.post('/avatar', authenticate, upload.single('avatar'), uploadAvatar);
 
-// 实名认证 (需要认证)
-const verifyRealnameValidations = [
-  body('realName').trim().notEmpty().withMessage('真实姓名不能为空'),
-  body('idCard').isLength({ min: 15, max: 18 }).withMessage('请输入有效的身份证号'),
-  body('idCardFront').notEmpty().withMessage('请上传身份证正面照片'),
-  body('idCardBack').notEmpty().withMessage('请上传身份证反面照片')
-];
-router.post('/verify-realname', authenticate, verifyRealnameValidations, validate(verifyRealnameValidations), upload.fields([
-  { name: 'idCardFront', maxCount: 1 },
-  { name: 'idCardBack', maxCount: 1 }
-]), verifyRealName);
+// 实名认证 (需要认证)。未接入可信核验服务前，控制器明确返回 501，不接受或存储身份证材料。
+router.post('/verify-realname', authenticate, verifyRealName);
 
 export default router;
