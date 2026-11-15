@@ -102,6 +102,15 @@ io.on('connection', (socket) => {
 // 数据库连接
 const connectDB = async () => {
   try {
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret || jwtSecret.length < 32) {
+      throw new Error('JWT_SECRET 未配置或长度不足 32 位，请在 server/.env 中设置强随机密钥');
+    }
+
+    if (process.env.NODE_ENV === 'production' && !process.env.MONGODB_URI) {
+      throw new Error('生产环境必须配置 MONGODB_URI');
+    }
+
     await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/pethome');
     console.log('MongoDB 连接成功');
   } catch (error) {
