@@ -44,12 +44,12 @@ export default function LostFoundPage() {
 
   const getStatusBadge = (status: string) => {
     const badges: any = {
-      active: 'bg-danger',
+      lost: 'bg-danger',
       found: 'bg-success',
       closed: 'bg-secondary',
     }
     const labels: any = {
-      active: '寻找中',
+      lost: '寻找中',
       found: '已找到',
       closed: '已关闭',
     }
