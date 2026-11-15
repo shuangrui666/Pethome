@@ -32,6 +32,12 @@ export const createPet = async (data: Partial<Pet>) => {
   return response.data
 }
 
+// 获取当前登录用户的宠物档案
+export const getMyPets = async () => {
+  const response = await api.get('/pets/my')
+  return response.data
+}
+
 // 获取宠物列表
 export const getPets = async (params?: {
   type?: string
