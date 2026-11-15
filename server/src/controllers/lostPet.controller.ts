@@ -55,7 +55,7 @@ export const reportLostPet = async (req: AuthRequest, res: Response) => {
       reward: reward ? Number(reward) : 0,
       status: 'lost',
       reporterId: req.user!.userId,
-      images: req.files ? (req.files as Express.Multer.File[]).map(f => f.path) : []
+      images: req.files ? (req.files as Express.Multer.File[]).map(f => `/uploads/${f.filename}`) : []
     });
 
     await lostPet.save();
@@ -126,7 +126,8 @@ export const getLostPetById = async (req: Request, res: Response) => {
 
     const lostPet = await LostPet.findById(id)
       .populate('reporterId', 'username phone email avatar')
-      .populate('petId', 'name species breed age images description');
+      .populate('petId', 'name species breed age images description')
+      .populate('reports.reporterId', 'username avatar');
 
     if (!lostPet) {
       return res.status(404).json({
@@ -135,17 +136,9 @@ export const getLostPetById = async (req: Request, res: Response) => {
       });
     }
 
-    // 获取线索列表
-    const clues = await LostPet.find({
-      relatedLostPetId: id,
-      type: 'clue'
-    }).populate('reporterId', 'username avatar');
-
-    // 获取匹配记录
-    const matches = await LostPet.find({
-      relatedLostPetId: id,
-      type: 'match'
-    }).populate('reporterId', 'username avatar');
+    // 线索与匹配信息存放在原走失记录的嵌入式数组中。
+    const clues = lostPet.reports || [];
+    const matches = lostPet.matches || [];
 
     res.json({
       success: true,
@@ -211,20 +204,7 @@ export const matchLostPets = async (req: Request, res: Response) => {
     // 按相似度排序
     matches.sort((a, b) => b.similarityScore - a.similarityScore);
 
-    // 保存匹配记录
-    for (const match of matches.slice(0, 5)) { // 保存前 5 个最相似的
-      const matchRecord = new LostPet({
-        type: 'match',
-        description: `智能匹配到相似的走失记录`,
-        lostTime: lostPet.lostTime,
-        lostLocation: lostPet.lostLocation,
-        reporterId: lostPet.reporterId,
-        relatedLostPetId: id,
-        matchedWith: match.lostPet._id,
-        status: 'pending'
-      });
-      await matchRecord.save();
-    }
+    // 匹配结果是规则计算结果，直接返回，不创建缺少必填字段的伪 LostPet 文档。
 
     res.json({
       success: true,
@@ -247,7 +227,7 @@ export const matchLostPets = async (req: Request, res: Response) => {
 export const submitClue = async (req: AuthRequest, res: Response) => {
   try {
     const { id } = req.params;
-    const { description, sightingTime, sightingLocation, photos } = req.body;
+    const { description, clueTime, clueLocation } = req.body;
 
     const lostPet = await LostPet.findById(id);
     if (!lostPet) {
@@ -257,23 +237,29 @@ export const submitClue = async (req: AuthRequest, res: Response) => {
       });
     }
 
-    const clue = new LostPet({
-      type: 'clue',
-      description,
-      lostTime: sightingTime ? new Date(sightingTime) : new Date(),
-      lostLocation: sightingLocation || lostPet.lostLocation,
-      reporterId: req.user!.userId,
-      relatedLostPetId: id,
-      photos: photos || [],
-      status: 'pending'
-    });
+    const images = req.files
+      ? (req.files as Express.Multer.File[]).map(file => `/uploads/${file.filename}`)
+      : [];
 
-    await clue.save();
+    lostPet.reports.push({
+      reporterId: new mongoose.Types.ObjectId(req.user!.userId),
+      location: {
+        type: 'Point',
+        coordinates: lostPet.lostLocation.coordinates,
+        address: clueLocation
+      },
+      time: new Date(clueTime),
+      description,
+      images,
+      status: 'unverified'
+    } as any);
+
+    await lostPet.save();
 
     res.status(201).json({
       success: true,
-      message: '线索上报成功',
-      data: clue
+      message: '线索上报成功，等待核实',
+      data: lostPet.reports[lostPet.reports.length - 1]
     });
   } catch (error: any) {
     console.error('上报线索错误:', error);
