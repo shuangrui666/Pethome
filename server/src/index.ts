@@ -43,13 +43,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 请求日志中间件
-app.use((req, res, next) => {
-  console.log(`=== 请求：${req.method} ${req.path} ===`);
-  console.log('请求头:', req.headers);
-  console.log('请求体:', req.body);
-  next();
-});
+// 生产环境不得记录请求头或请求体，避免泄露 Authorization、密码及个人信息。
 
 // 静态文件服务
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
@@ -108,6 +102,15 @@ io.on('connection', (socket) => {
 // 数据库连接
 const connectDB = async () => {
   try {
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret || jwtSecret.length < 32) {
+      throw new Error('JWT_SECRET 未配置或长度不足 32 位，请在 server/.env 中设置强随机密钥');
+    }
+
+    if (process.env.NODE_ENV === 'production' && !process.env.MONGODB_URI) {
+      throw new Error('生产环境必须配置 MONGODB_URI');
+    }
+
     await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/pethome');
     console.log('MongoDB 连接成功');
   } catch (error) {

@@ -7,23 +7,17 @@ import { AuthRequest } from '../middleware/auth.middleware';
 // 注册
 export const register = async (req: Request, res: Response) => {
   try {
-    console.log('=== 注册请求开始 ===');
-    console.log('请求体:', req.body);
     const { username, email, password, phone } = req.body;
-    console.log('解构后的值:', { username, email, password, phone });
 
-    // 检查用户是否存在
-    const query: any = { username };
+    // 任一身份字段重复都应拒绝注册，不能要求 username 与 email/phone 同时匹配。
+    const duplicateConditions: Array<Record<string, string>> = [{ username }];
     if (email) {
-      query.$or = [{ email }];
+      duplicateConditions.push({ email: email.toLowerCase() });
     }
     if (phone) {
-      if (!query.$or) {
-        query.$or = [];
-      }
-      query.$or.push({ phone });
+      duplicateConditions.push({ phone });
     }
-    const existingUser = await User.findOne(query);
+    const existingUser = await User.findOne({ $or: duplicateConditions });
     if (existingUser) {
       return res.status(400).json({
         success: false,
@@ -76,10 +70,7 @@ export const register = async (req: Request, res: Response) => {
 // 登录
 export const login = async (req: Request, res: Response) => {
   try {
-    console.log('=== 登录请求开始 ===');
-    console.log('请求体:', req.body);
     const { usernameOrEmail, password } = req.body;
-    console.log('解构后的值:', { usernameOrEmail, password });
 
     if (!usernameOrEmail || !password) {
       return res.status(400).json({
@@ -97,12 +88,9 @@ export const login = async (req: Request, res: Response) => {
     } else {
       query = { username: usernameOrEmail };
     }
-    console.log('查询条件:', query);
 
     // 查找用户 (需要选择 password 字段)
     const user = await User.findOne(query).select('+password');
-    console.log('查找到的用户:', user ? { id: user._id, username: user.username } : 'null');
-    console.log('用户密码字段是否存在:', user?.password ? '是' : '否');
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -111,9 +99,7 @@ export const login = async (req: Request, res: Response) => {
     }
 
     // 验证密码
-    console.log('开始验证密码...');
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    console.log('密码验证结果:', isPasswordValid ? '成功' : '失败');
     if (!isPasswordValid) {
       return res.status(401).json({
         success: false,

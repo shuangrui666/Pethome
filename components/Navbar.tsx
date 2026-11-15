@@ -11,7 +11,12 @@ export default function Navbar() {
   useEffect(() => {
     const storedUser = localStorage.getItem('user')
     if (storedUser) {
-      setUser(JSON.parse(storedUser))
+      try {
+        setUser(JSON.parse(storedUser))
+      } catch {
+        localStorage.removeItem('user')
+        localStorage.removeItem('token')
+      }
     }
 
     const handleScroll = () => {
@@ -122,11 +127,6 @@ export default function Navbar() {
                   <li>
                     <Link className="dropdown-item" href="/my-pets">
                       我的宠物
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" href="/messages">
-                      消息
                     </Link>
                   </li>
                   <li>
