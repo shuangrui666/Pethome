@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { addClue, getLostPetById } from '@/src/api/lostPet'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 
@@ -22,76 +23,43 @@ export default function LostPetDetailPage() {
   // 从 API 获取走失宠物详情
   useEffect(() => {
     const fetchLostPetDetail = async () => {
-      if (!params.id) {
-        console.log('❌ 没有 params.id，跳过请求')
-        return
-      }
-
-      const apiUrl = `http://localhost:5000/api/lost-pets/${params.id}`
-      console.log('🔍 开始请求走失宠物详情:', apiUrl)
-
+      if (!params.id) return;
       try {
-        setLoading(true)
-        setError(null)
-
-        const response = await fetch(apiUrl, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-
-        console.log('📡 响应状态:', response.status, response.ok)
-
-        if (!response.ok) {
-          const errorText = await response.text()
-          console.error('❌ 请求失败:', response.status, errorText)
-          throw new Error(`请求失败：${response.status} ${errorText}`)
+        setLoading(true);
+        setError(null);
+        const responseData = await getLostPetById(params.id as string);
+        if (!responseData.success || !responseData.data?.lostPet) {
+          throw new Error(responseData.message || '无法加载宠物详情');
         }
-
-        const responseData = await response.json()
-        console.log('✅ 原始响应数据:', JSON.stringify(responseData, null, 2))
-
-        if (responseData.success) {
-          console.log('📦 responseData.data:', responseData.data)
-          console.log('🐕 lostPet 数据:', responseData.data.lostPet)
-
-          if (!responseData.data || !responseData.data.lostPet) {
-            console.error('❌ 响应数据缺少 lostPet 字段')
-            throw new Error('响应数据格式错误：缺少 lostPet 字段')
-          }
-
-          setLostPet(responseData.data.lostPet)
-          console.log('✅ 成功设置 lostPet 状态')
-        } else {
-          console.error('❌ API 返回 success=false:', responseData.message)
-          throw new Error(responseData.message || '无法加载宠物详情')
-        }
-      } catch (err) {
-        console.error('❌ 获取走失宠物详情失败:', err)
-        const errorMessage = err instanceof Error ? err.message : '加载失败，请稍后重试'
-        setError(errorMessage)
+        setLostPet(responseData.data.lostPet);
+      } catch (err: any) {
+        setError(err.response?.data?.message || err.message || '加载失败，请稍后重试');
       } finally {
-        setLoading(false)
-        console.log('🏁 加载完成，loading=false')
+        setLoading(false);
       }
-    }
-
-    fetchLostPetDetail()
-  }, [params.id])
+    };
+    fetchLostPetDetail();
+  }, [params.id]);
 
   const handleSubmitTip = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
+    if (!params.id) return;
     try {
-      // TODO: 调用提交线索 API
-      // await submitLostPetTip(params.id, tip)
-      alert('线索提交成功，感谢帮助！')
-      setShowTipForm(false)
-      setTip({ name: '', phone: '', location: '', time: '', description: '', contact: true })
-    } catch (error) {
-      console.error('提交线索失败:', error)
-      alert('提交失败，请稍后重试')
+      const formData = new FormData();
+      formData.append('description', tip.description);
+      formData.append('clueTime', tip.time);
+      formData.append('clueLocation', tip.location);
+      await addClue(params.id as string, formData);
+      alert('线索已提交，等待核实，感谢帮助！');
+      setShowTipForm(false);
+      setTip({ name: '', phone: '', location: '', time: '', description: '', contact: true });
+      const refreshed = await getLostPetById(params.id as string);
+      if (refreshed.success && refreshed.data?.lostPet) setLostPet(refreshed.data.lostPet);
+    } catch (error: any) {
+      console.error('提交线索失败:', error);
+      alert(error.response?.data?.message || '提交失败，请稍后重试');
     }
-  }
+  };
 
   const handleShare = () => {
     if (navigator.share && lostPet) {
