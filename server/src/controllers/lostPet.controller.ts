@@ -216,7 +216,16 @@ export const submitClue = async (req: AuthRequest, res: Response) => {
 export const updateLostPetStatus = async (req: AuthRequest, res: Response) => {
   try {
     const { id } = req.params;
-    const { status, notes } = req.body;
+    const { status, notes, foundLocation, foundTime, currentStatus } = req.body;
+    const nextStatus = status || (foundLocation || foundTime || currentStatus ? 'found' : undefined);
+
+    if (!nextStatus || !['lost', 'found', 'adopted', 'closed'].includes(nextStatus)) {
+      return res.status(400).json({ success: false, message: '无效或缺失的宠物状态' });
+    }
+
+    if (foundTime && Number.isNaN(new Date(foundTime).getTime())) {
+      return res.status(400).json({ success: false, message: '找到时间格式无效' });
+    }
 
     const lostPet = await LostPet.findOne({
       _id: id,
@@ -230,15 +239,18 @@ export const updateLostPetStatus = async (req: AuthRequest, res: Response) => {
       });
     }
 
-    lostPet.status = status;
-    if (notes) {
-      lostPet.notes = notes;
+    lostPet.status = nextStatus as any;
+    if (notes) lostPet.notes = notes;
+    if (nextStatus === 'found') {
+      if (foundLocation) lostPet.foundLocation = foundLocation;
+      if (foundTime) lostPet.foundTime = new Date(foundTime);
+      if (currentStatus) lostPet.currentStatus = currentStatus;
     }
 
     await lostPet.save();
 
     // 如果找到宠物，更新关联的宠物状态
-    if (status === 'found' && lostPet.petId) {
+    if (nextStatus === 'found' && lostPet.petId) {
       await Pet.findByIdAndUpdate(lostPet.petId, {
         isLost: false,
         foundAt: new Date()
