@@ -21,6 +21,9 @@ export interface ILostPet extends Document {
   };
   lastSeenTime?: Date;
   lastSeenLocation?: string;
+  foundLocation?: string;
+  foundTime?: Date;
+  currentStatus?: string;
   contactPhone: string;
   contactWechat?: string;
   reward?: number;
@@ -122,6 +125,16 @@ const lostPetSchema = new Schema<ILostPet>(
     },
     lastSeenLocation: {
       type: String
+    },
+    foundLocation: {
+      type: String
+    },
+    foundTime: {
+      type: Date
+    },
+    currentStatus: {
+      type: String,
+      maxlength: 200
     },
     contactPhone: {
       type: String,
