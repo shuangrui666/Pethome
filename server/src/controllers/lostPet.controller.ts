@@ -45,10 +45,9 @@ export const reportLostPet = async (req: AuthRequest, res: Response) => {
       lostTime: new Date(lostTime),
       lostLocation: {
         type: 'Point',
-        coordinates: [116.4074, 39.9042],
         address: lostAddress,
-        city: lostCity || '北京',
-        district: lostDistrict || '朝阳区'
+        ...(lostCity ? { city: lostCity } : {}),
+        ...(lostDistrict ? { district: lostDistrict } : {})
       },
       contactPhone,
       contactWechat,
@@ -159,68 +158,11 @@ export const getLostPetById = async (req: Request, res: Response) => {
 };
 
 // 智能匹配相似的走失宠物
-export const matchLostPets = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-
-    const lostPet = await LostPet.findById(id);
-    if (!lostPet) {
-      return res.status(404).json({
-        success: false,
-        message: '走失宠物记录不存在'
-      });
-    }
-
-    // 查找时间和地点相近的其他走失记录
-    const timeWindow = 7 * 24 * 60 * 60 * 1000; // 7 天
-    const timeMin = new Date(lostPet.lostTime.getTime() - timeWindow);
-    const timeMax = new Date(lostPet.lostTime.getTime() + timeWindow);
-
-    const potentialMatches = await LostPet.find({
-      _id: { $ne: id },
-      lostTime: { $gte: timeMin, $lte: timeMax },
-      status: { $in: ['lost', 'found'] }
-    });
-
-    const matches = [];
-
-    for (const potentialMatch of potentialMatches) {
-      // 计算距离
-      const distance = calculateDistance(
-        lostPet.lostLocation.coordinates,
-        potentialMatch.lostLocation.coordinates
-      );
-
-      // 如果距离在 5 公里内，认为是潜在匹配
-      if (distance < 5000) {
-        matches.push({
-          lostPet: potentialMatch,
-          distance,
-          similarityScore: calculateSimilarity(lostPet, potentialMatch, distance)
-        });
-      }
-    }
-
-    // 按相似度排序
-    matches.sort((a, b) => b.similarityScore - a.similarityScore);
-
-    // 匹配结果是规则计算结果，直接返回，不创建缺少必填字段的伪 LostPet 文档。
-
-    res.json({
-      success: true,
-      data: {
-        original: lostPet,
-        matches: matches.slice(0, 10) // 返回前 10 个匹配
-      }
-    });
-  } catch (error: any) {
-    console.error('匹配走失宠物错误:', error);
-    res.status(500).json({
-      success: false,
-      message: '匹配走失宠物失败',
-      error: error.message
-    });
-  }
+export const matchLostPets = async (_req: Request, res: Response) => {
+  return res.status(501).json({
+    success: false,
+    message: '地理编码服务尚未接入，暂不提供基于距离的匹配结果，避免错误定位造成误导'
+  });
 };
 
 // 上报线索
@@ -358,45 +300,11 @@ export const getMyLostPets = async (req: AuthRequest, res: Response) => {
 };
 
 // 获取附近的走失宠物
-export const getNearbyLostPets = async (req: Request, res: Response) => {
-  try {
-    const { longitude, latitude, distance = 10000 } = req.query;
-
-    if (!longitude || !latitude) {
-      return res.status(400).json({
-        success: false,
-        message: '请提供经度和纬度'
-      });
-    }
-
-    const lostPets = await LostPet.find({
-      status: { $in: ['lost', 'found'] },
-      lostLocation: {
-        $near: {
-          $geometry: {
-            type: 'Point',
-            coordinates: [Number(longitude), Number(latitude)]
-          },
-          $maxDistance: Number(distance)
-        }
-      }
-    })
-      .populate('reporterId', 'username phone')
-      .populate('petId', 'name species breed images')
-      .sort({ createdAt: -1 });
-
-    res.json({
-      success: true,
-      data: lostPets
-    });
-  } catch (error: any) {
-    console.error('获取附近走失宠物错误:', error);
-    res.status(500).json({
-      success: false,
-      message: '获取附近走失宠物失败',
-      error: error.message
-    });
-  }
+export const getNearbyLostPets = async (_req: Request, res: Response) => {
+  return res.status(501).json({
+    success: false,
+    message: '附近搜索需要真实地理编码服务，目前尚未接入'
+  });
 };
 
 // 计算两点之间的距离（米）
