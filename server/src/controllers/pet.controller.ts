@@ -8,7 +8,13 @@ export const createPet = async (req: AuthRequest, res: Response) => {
   try {
     const { name, species, breed, gender, age, description, location, isAdoptable } = req.body;
 
-    const images = req.files ? (req.files as Express.Multer.File[]).map(file => `/uploads/${file.filename}`) : [];
+    const uploadedImages = req.files
+      ? (req.files as Express.Multer.File[]).map(file => `/uploads/${file.filename}`)
+      : [];
+    const suppliedImages = Array.isArray(req.body.images)
+      ? req.body.images.filter((url: unknown) => typeof url === 'string' && /^https:\/\//i.test(url))
+      : [];
+    const images = uploadedImages.length > 0 ? uploadedImages : suppliedImages;
 
     const pet = new Pet({
       ownerId: req.user!.userId,
