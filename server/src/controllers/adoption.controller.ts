@@ -39,18 +39,19 @@ export const createAdoption = async (req: AuthRequest, res: Response) => {
       });
     }
 
-    // 检查用户是否实名认证
-    if (!req.user!.realNameVerified) {
+    // 从数据库读取当前实名状态，不依赖 JWT 中可能过期或缺失的用户资料字段。
+    const applicant = await User.findById(req.user!.userId).select('username realNameVerified');
+    if (!applicant || !applicant.realNameVerified) {
       return res.status(403).json({
         success: false,
-        message: '领养需要实名认证，请先完成认证'
+        message: '领养需要完成真实身份核验；当前实名认证服务尚未接入，请暂勿提交申请'
       });
     }
 
     const application = new Adoption({
       petId,
       applicantId: req.user!.userId,
-      applicantName: req.user!.username,
+      applicantName: applicant.username,
       applicantPhone,
       applicantEmail,
       applicantAddress,
