@@ -183,15 +183,15 @@ export default function LostPetDetailPage() {
           {/* 基本信息 */}
           <div className="card mb-4">
             <div className="card-header bg-danger text-white">
-              <h2 className="mb-0">🔴 寻找：{lostPet.petId?.name || '未知宠物'}</h2>
+              <h2 className="mb-0">🔴 寻找：{lostPet.petName || lostPet.petId?.name || '未知宠物'}</h2>
             </div>
             <div className="card-body">
               <div className="row mb-3">
                 <div className="col-md-6">
-                  <p className="mb-1"><strong>品种：</strong>{lostPet.petId?.breed || '未知'}</p>
-                  <p className="mb-1"><strong>年龄：</strong>{lostPet.petId?.age || '未知'}</p>
-                  <p className="mb-1"><strong>性别：</strong>{lostPet.petId?.gender || '未知'}</p>
-                  <p className="mb-1"><strong>毛色：</strong>{lostPet.petId?.color || '未知'}</p>
+                  <p className="mb-1"><strong>品种：</strong>{lostPet.breed || lostPet.petId?.breed || '未知'}</p>
+                  <p className="mb-1"><strong>年龄：</strong>{lostPet.age ?? lostPet.petId?.age ?? '未知'}</p>
+                  <p className="mb-1"><strong>性别：</strong>{lostPet.gender || lostPet.petId?.gender || '未知'}</p>
+                  <p className="mb-1"><strong>毛色：</strong>{lostPet.color || lostPet.petId?.color || '未知'}</p>
                 </div>
                 <div className="col-md-6">
                   <p className="mb-1"><strong>体重：</strong>{lostPet.petId?.weight || '未知'}</p>
@@ -203,7 +203,7 @@ export default function LostPetDetailPage() {
 
               {/* 特征描述 */}
               <h5 className="mb-3">🎯 显著特征</h5>
-              <p className="text-muted">{lostPet.petId?.description || '暂无描述'}</p>
+              <p className="text-muted">{lostPet.features || lostPet.petId?.description || '暂无描述'}</p>
 
               {/* 详细描述 */}
               <h5 className="mb-3">📝 详细描述</h5>
@@ -368,10 +368,10 @@ export default function LostPetDetailPage() {
                   <span className="badge bg-primary">✓ 已认证</span>
                 )}
               </div>
-              <p className="mb-2"><strong>📞 电话：</strong>{lostPet.reporterId?.phone || '暂无'}</p>
+              <p className="mb-2"><strong>📞 电话：</strong>{lostPet.contactPhone || lostPet.reporterId?.phone || '暂无'}</p>
               <div className="d-grid gap-2">
-                {lostPet.reporterId?.phone ? (
-                  <a href={`tel:${lostPet.reporterId.phone}`} className="btn btn-primary">
+                {(lostPet.contactPhone || lostPet.reporterId?.phone) ? (
+                  <a href={`tel:${lostPet.contactPhone || lostPet.reporterId?.phone}`} className="btn btn-primary">
                     拨打电话
                   </a>
                 ) : (
@@ -395,19 +395,19 @@ export default function LostPetDetailPage() {
               <div className="mb-3">
                 <div className="d-flex justify-content-between mb-1">
                   <span>寻找进度</span>
-                  <span>30%</span>
+                  <span>暂未统计</span>
                 </div>
                 <div className="progress">
-                  <div className="progress-bar bg-warning" style={{ width: '30%' }}></div>
+                  <div className="progress-bar bg-warning" style={{ width: '0%' }}></div>
                 </div>
               </div>
               <div className="row text-center">
                 <div className="col-6">
-                  <h4 className="mb-0">128</h4>
+                  <h4 className="mb-0">—</h4>
                   <small className="text-muted">👁️ 浏览</small>
                 </div>
                 <div className="col-6">
-                  <h4 className="mb-0">{lostPet.clues?.length || 0}</h4>
+                  <h4 className="mb-0">{lostPet.reports?.length || 0}</h4>
                   <small className="text-muted">💡 线索</small>
                 </div>
               </div>
@@ -425,18 +425,12 @@ export default function LostPetDetailPage() {
                   <small className="text-muted">{new Date(lostPet.lostTime).toLocaleString()}</small>
                   <p className="mb-0">发布寻宠信息</p>
                 </div>
-                <div className="mb-3">
-                  <small className="text-muted">2024-01-12</small>
-                  <p className="mb-0">收到 5 条线索</p>
-                </div>
-                <div className="mb-3">
-                  <small className="text-muted">2024-01-13</small>
-                  <p className="mb-0">AI 匹配到 2 只相似宠物</p>
-                </div>
-                <div>
-                  <small className="text-muted">今天</small>
-                  <p className="mb-0">分享次数突破 100 次</p>
-                </div>
+                {lostPet.reports?.length > 0 && (
+                  <div className="mb-3">
+                    <small className="text-muted">最新线索</small>
+                    <p className="mb-0">已收到 {lostPet.reports.length} 条线索，等待核实</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
