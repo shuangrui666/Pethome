@@ -109,3 +109,45 @@
 - 未修改业务源代码。
 
 **当前状态：第一轮静态审计发现高优先级问题；第一阶段仍未完成。**
+
+
+## 6. 补充核查：认证上传、用户资料和核心表单
+
+### SEC-07：实名认证上传中间件顺序错误
+
+`server/src/routes/auth.routes.ts` 中实名认证路由的顺序为：
+
+1. `verifyRealnameValidations`
+2. `validate(verifyRealnameValidations)`
+3. `upload.fields(...)`
+
+但 `idCardFront` 和 `idCardBack` 是文件字段，Multer 尚未执行时，文件内容还没有被解析到请求对象。当前校验器却要求这两个字段在 `req.body` 中非空，因此合法的 multipart 文件上传也可能在到达 Multer 前被校验拒绝。应将文本字段校验与文件存在性校验分开，并在 Multer 解析后检查文件字段；同时先解决 SEC-03 的“模拟实名”问题。
+
+### API-01：用户资料“我的资料”路由参数不匹配
+
+`server/src/routes/user.routes.ts` 将 `GET /me` 绑定到 `getUserProfile`，但 `getUserProfile` 从 `req.params.id` 读取用户 ID。该路由没有 `:id` 参数，因此无法正确获取当前用户。应改为基于认证中间件提供的 `req.userId` 查询，或绑定专用的当前用户控制器。
+
+### API-02：领养创建页面读取宠物列表的响应结构错误
+
+`app/adoption/create/page.tsx` 中读取 `getPets()` 后使用 `response.data`，但后端宠物列表控制器的响应结构为 `{ success, data: pets, pagination }`。结合 API 模块原样返回 `response.data`，该页面应读取 `response.data`，而不是对响应对象读取另一个不存在的 `data` 字段。当前代码读取路径需要修正并加测试。
+
+### API-03：宠物列表参数名不一致
+
+前端宠物 API 接受 `type` 参数，后端控制器读取 `species`；前端传入 `isAdoptable`，普通列表控制器没有处理该参数。过滤条件可能静默失效。
+
+### API-04：宠物新增表单字段和后端校验不一致
+
+`app/my-pets/page.tsx` 当前提交 `photos` URL 数组；后端创建路由验证 `name/species/breed/gender/age`，控制器则从 Multer `images` 文件字段读取图片，并没有把 `photos` 当作上传文件处理。页面还允许品种留空，但后端要求非空。需要统一为真实文件上传或明确支持 URL，并让前后端字段一致。
+
+## 7. 第一轮核心流程判断
+
+| 流程 | 当前静态判断 | 主要阻塞 |
+|---|---|---|
+| 注册/登录 | 代码已存在，待运行验证 | 敏感日志；401 路由错配；JWT/用户信息字段需要统一 |
+| 实名认证 | 不可作为真实认证使用 | 模拟验证；multipart 校验顺序；前端路径错配 |
+| 我的宠物 | 部分实现，当前数据链路存在错误 | 响应字段错配；新增字段错配；删除按钮未调用 API |
+| 领养申请 | 部分实现，当前很可能被阻断 | 宠物列表响应读取错误；JWT 不含实名字段；前端审核 API 与后端路由不一致 |
+| 走失报告 | 有表单与后端处理代码，待联调 | 前端字段契约需继续逐项核对；列表页发现报告数据逻辑不正确 |
+| 社区 | 部分实现 | mock 回退；社交 API 模块大量路径不对应实际后端 |
+| 医疗 | 当前接口契约严重不一致 | 前端 records/clinics/appointments 与后端 diagnosis/vets/resources 路由模型不同；mock 回退 |
+
