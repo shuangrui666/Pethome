@@ -1,11 +1,8 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'PetHome 宠物家园',
@@ -19,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN">
-      <body className={inter.className}>
+      <body>
         <Navbar />
         <main style={{ paddingTop: '70px' }}>
           {children}
