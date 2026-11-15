@@ -23,6 +23,39 @@ export const getUsers = async (req: Request, res: Response) => {
   }
 };
 
+// 获取当前登录用户资料
+export const getCurrentUserProfile = async (req: AuthRequest, res: Response) => {
+  try {
+    const userId = req.user?.userId;
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: '未认证'
+      });
+    }
+
+    const user = await User.findById(userId).select('-password');
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: '用户不存在'
+      });
+    }
+
+    res.json({
+      success: true,
+      data: user
+    });
+  } catch (error: any) {
+    console.error('获取当前用户资料错误:', error);
+    res.status(500).json({
+      success: false,
+      message: '获取当前用户资料失败',
+      error: error.message
+    });
+  }
+};
+
 // 获取用户资料
 export const getUserProfile = async (req: Request, res: Response) => {
   try {
