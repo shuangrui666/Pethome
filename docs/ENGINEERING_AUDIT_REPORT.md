@@ -172,3 +172,22 @@
 **安全说明：** 当前实名认证会明确不可用，直到接入真实、合规的身份核验服务。这是有意采用的 fail-closed 行为，不应为了让领养演示通过而恢复“模拟认证成功”。
 
 **提交记录：** 本轮包含审计报告、路线图和上述代码修复；具体提交可在 GitHub 仓库 main 分支历史中查看。
+
+
+### 2026-11-15：当前用户资料与寻回列表查询修复
+已追加两项静态代码修复，均已提交到 `main` 并重新读取 GitHub 文件确认：
+
+| 修复 | 修改内容 | 状态 |
+|---|---|---|
+| API-01 当前用户资料 | 新增专用 `getCurrentUserProfile`，从认证中间件提供的 `req.user.userId` 查询当前用户；`GET /api/users/me` 改为绑定该控制器，不再把无 `:id` 的路径交给读取 `req.params.id` 的公开资料控制器 | 已提交，待构建与认证接口测试 |
+| 寻回“我的报告” | 移除 `getMyLostPets` 查询中模型不存在的 `type` 条件，按 `reporterId` 和可选 `status` 查询 | 已提交，待数据库接口测试 |
+
+本轮同时确认：
+- `LostPet.model.ts` 的 `reports` 嵌入式结构包含线索提交所需的 reporterId、location、time、description、images、status 字段；当前控制器写入结构与模型基本对应。
+- `POST /api/lost-pets/:id/clue` 已配置认证和 `upload.array('clueImages', 3)`；详情接口响应为 `data.lostPet`，与详情页读取方式一致。
+- Adoption 控制器已正确导入 `User`，实名状态数据库读取不存在缺失导入问题。
+- 仍存在未解决的线索表单问题：页面收集的姓名、电话字段未随请求发送，当前后端嵌入式线索模型也未保存这两个字段；需要统一产品行为和数据契约后再修。
+- `GET /api/users/:id` 仍是公开用户资料读取路径；需后续确认返回字段、隐私边界及页面使用场景。
+- `getMyLostPets` 与上述接口修复尚未通过 TypeScript 构建、真实 MongoDB 请求或前端联调。
+
+**提交记录：** 当前用户资料修复提交 `84a230ab7c79502de6929ff41a1851c213b9bfdc`；寻回列表查询修复提交 `827aae7c66292909d28821f9f5d81a91eae66589`。此前用户资料控制器新增提交为 `4783cfab1634db13bcda37a8367b246d4c1e5e35`。
