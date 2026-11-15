@@ -1,0 +1,111 @@
+# PetHome 工程审计报告（第一轮静态核查）
+
+> 核查日期：2026-11-15  
+> 仓库：`shuangrui666/Pethome`  
+> 分支：`main`  
+> 核查方式：只读检查 GitHub 源码、路由、控制器、模型和项目配置。  
+> **重要边界：** 本报告是静态代码审计，不代表前后端已成功启动、构建、连接真实数据库或通过端到端测试。未读取任何 `.env` 或密钥文件。
+
+## 1. 本轮结论
+
+当前 PetHome 已具备 Next.js 页面、Express API 路由、Mongoose 模型和部分业务控制器的代码骨架，但前后端接口契约存在大量不一致，若干页面依赖模拟数据，且认证与日志存在高优先级安全问题。当前不应将项目描述为可正式使用或已完成部署。
+
+**第一轮判断：**
+- 前端页面：存在真实页面与表单，但不能据此认定业务闭环可用。
+- 后端：存在 Express 路由、控制器和 Mongoose 模型；MongoDB 连接在 `server/src/index.ts` 中直接配置。
+- 前后端集成：多组 API 路径、HTTP 方法、参数名和响应结构不一致，部分调用会命中不存在的接口。
+- 真实性：社区、寻回、医疗等页面在失败或空数据时会显示本地 mock 数据；首页展示的统计数字没有真实统计接口证据。
+- 安全：密码/请求头日志、伪实名认证、JWT 实名状态缺失等问题应先于视觉改版修复。
+
+## 2. 已确认的核心问题
+
+### P0：安全与信任边界
+
+| 编号 | 问题 | 证据位置 | 影响 |
+|---|---|---|---|
+| SEC-01 | 全局请求日志打印请求头和请求体 | `server/src/index.ts` | Authorization Bearer token、密码和个人提交内容可能进入日志 |
+| SEC-02 | 注册和登录控制器打印完整请求体及密码字段 | `server/src/controllers/auth.controller.ts` | 明文密码可能进入服务日志 |
+| SEC-03 | 实名认证控制器明确写明“模拟验证成功”，仅做格式检查和文件上传后就设置 `realNameVerified: true` | `server/src/controllers/auth.controller.ts` | 不能作为真实身份核验；可能让未被权威核验的账号获得实名状态 |
+| SEC-04 | JWT 生成时只包含 `userId` 和 `role`；领养控制器却读取 `req.user.realNameVerified` | `server/src/controllers/auth.controller.ts`、`server/src/controllers/adoption.controller.ts`、`server/src/middleware/auth.middleware.ts` | 令牌解码对象没有该字段，领养创建流程的实名判断可能始终失败；应从数据库读取可信状态或重新设计令牌/权限校验 |
+| SEC-05 | HTTP CORS 使用默认开放配置，Socket.IO 默认允许 `*` | `server/src/index.ts` | 生产环境跨域来源没有按实际前端域名收紧 |
+| SEC-06 | 上传中间件允许图片和视频，单文件上限 50MB；当前过滤主要依赖客户端 MIME 类型 | `server/src/middleware/upload.middleware.ts` | 需要补充服务端内容检测、文件大小/数量策略、访问控制和存储策略 |
+
+### P1：核心业务 API 契约不匹配
+
+以下是从前端 API 模块与后端已注册路由直接对照得出的静态错配。除非另有同路径代理或未纳入本轮范围的服务，否则这些请求无法按当前路由定义正常匹配。
+
+| 业务 | 前端请求 | 后端实际路由/问题 |
+|---|---|---|
+| 实名认证 | `POST /auth/verify` | 后端为 `POST /auth/verify-realname` |
+| 用户资料更新/删除 | `PUT/DELETE /users/:id` | 后端只定义 `PUT /users/me`；未发现对应的用户删除路由 |
+| 宠物状态更新 | `PATCH /pets/:id/status` | 后端未定义该路由 |
+| 领养审核 | `PATCH /adoption/:id/review` | 后端定义 `PUT /adoption/:id/approve` 与 `PUT /adoption/:id/reject` |
+| 领养待审核数 | `GET /adoption/pending-count` | 后端未定义该路由 |
+| 宠物领养申请列表 | `GET /pets/:id/adoptions` | 后端未定义该路由 |
+| 医疗记录/诊所/预约 | 前端使用 `/medical/records`、`/medical/clinics`、`/medical/appointments` 等 | 后端当前路由主要为 `/medical/diagnosis`、`/medical/resources`、`/medical/vets`、`/medical/vet-appointment` |
+| 幼儿园 | 前端使用 `/kindergartens` | 后端挂载前缀为 `/api/kindergarten`（单数）；报名、退园、我的报名、评价和附近查询也存在路径/方法差异 |
+| 服务预约 | 前端使用独立 `/bookings` 路由 | 后端服务路由定义在 `/services` 下，没有对应的 `/bookings` 路由 |
+| 训练报名/进度 | 前端调用 `/training/my-enrollments`、报名列表、sessions、progress 等路径 | 后端定义 `/training/my`、`/:id/cancel`、`/:id/progress`、`/:id/plan/:enrollmentId`；部分前端请求无对应路由或方法不同 |
+| 捐赠 | 前端使用 `/donations/my-donations`、`/:id/records`、`/shelters` 等 | 后端使用 `/donations/my`、`/:id/tracking`、`/donations/shelters`，取消方式及捐赠路径也不同 |
+| 社交/消息 | `src/api/social.ts` 使用 `/social/posts`、`/social/messages`、`/social/friend-requests` 等 | 后端 `social.routes.ts` 没有帖子/消息路由，帖子另挂载在 `/api/posts`；好友请求路径和 HTTP 方法也不一致 |
+| 店铺服务 | 前端部分服务更新使用 PATCH，且有 reviews/nearby 等请求 | 后端服务项目更新为 PUT；未发现对应 reviews/nearby 路由 |
+
+**修复原则：** 先建立唯一 API 契约表，再统一前端请求与后端路由；不要通过不断添加重复路由来掩盖命名和职责混乱。每条接口必须配请求/响应类型和最小集成测试。
+
+### P1：核心页面的数据读取和表单问题
+
+| 页面/模块 | 已确认问题 | 证据位置 |
+|---|---|---|
+| 我的宠物 | 页面调用 `getPets` 后读取 `data.pets`，后端 `getPets` 返回 `{ success, data, pagination }`；列表可能一直显示为空 | `app/my-pets/page.tsx`、`src/api/pet.ts`、`server/src/controllers/pet.controller.ts` |
+| 我的宠物 | 创建表单发送 `photos`，后端创建控制器从 Multer 文件字段读取 `images`；字段不一致；删除按钮尚未调用删除 API，只显示成功提示 | `app/my-pets/page.tsx`、`server/src/routes/pet.routes.ts` |
+| 领养 | 创建领养前依赖实名认证；当前 JWT 实名字段问题可能阻断提交 | `app/adoption/create/page.tsx`、`server/src/controllers/adoption.controller.ts` |
+| 社区 | API 返回空列表时会改用 `mockPosts`；API 报错时也会显示模拟帖子 | `app/community/page.tsx` |
+| 寻回 | API 报错时回退到 `mockLostPets`；“发现报告”标签当前仍请求 `status: lost`，再按宠物类型拆分模拟结果，不能视为真实已找到报告 | `app/lost-found/page.tsx` |
+| 医疗 | API 返回空列表或失败时会显示 `mockClinics` | `app/medical/page.tsx` |
+| 首页 | 显示 1000+ 领养、500+ 寻回、2000+ 用户、50+ 店铺等数字；未发现这些数字由真实统计接口提供 | `app/page.tsx` |
+
+### P2：其他工程问题
+
+1. `src/api/axios.ts` 的 401 拦截器跳转 `/login`，实际登录注册页为 `/auth`。
+2. 导航栏链接 `/messages`，但当前已盘点的 App Router 页面路由中没有该页面。
+3. `app/layout.tsx` 使用 `next/font/google` 下载 Inter；本地构建曾因访问 `fonts.gstatic.com` 超时而失败。当前不能据此判定其余源码一定可以编译。
+4. 根目录与 `client/` 存在高度重复的前端代码；暂不删除，待唯一入口确认后再治理。
+5. 用户统计控制器当前返回固定的 0 值统计对象，不能作为真实统计。
+6. 医疗控制器中的药品建议使用简单关键词规则匹配，并非训练好的 AI 模型；不得宣传为机器学习诊断。
+7. Socket.IO 目前有通用房间、视频帧和聊天事件处理代码，但未证明页面与这些事件形成可靠、授权的端到端链路。
+
+## 3. 已存在的真实代码基础（不等于验收通过）
+
+- Express 后端入口：`server/src/index.ts`。
+- MongoDB/Mongoose 连接：启动时读取 `MONGODB_URI`，未配置时回退到本机 MongoDB 地址。
+- 健康检查：`GET /api/health`。
+- 认证：注册、登录、当前用户资料和 JWT 中间件代码存在。
+- 宠物：创建、列表、详情、更新、删除、附近查询和我的宠物控制器代码存在。
+- 领养：申请创建、列表、详情、审核、取消和完成等控制器代码存在。
+- 寻回：报告、线索和匹配控制器代码存在。
+- 社区帖子：`/api/posts` 路由存在，包含帖子、评论、点赞和收藏相关处理。
+- 上传：Multer 磁盘存储中间件存在。
+- 数据模型：User、Pet、Adoption 等 Mongoose 模型存在。
+
+这些内容仅说明已找到代码实现候选；权限正确性、数据一致性、运行成功和业务验收仍需单独测试。
+
+## 4. 建议修复顺序
+
+1. **先止血安全问题：** 删除密码、Authorization 和完整请求体日志；实名认证改为明确的待核验流程，未接真实可信核验服务前不得自动标记为已实名；领养实名判断改为服务端读取数据库。
+2. **建立 API 契约基线：** 为认证、宠物、领养、寻回、社区、医疗逐项确定唯一路径、方法、字段和响应格式。
+3. **先打通最小核心闭环：** 注册/登录 → 获取当前用户 → 新增/读取/编辑/删除宠物档案 → 发布和查看领养/寻回内容。
+4. **消除误导性 mock 回退：** 真实 API 失败时显示错误和重试，不要把模拟数据伪装成真实业务数据；演示数据必须明确标注。
+5. **再修复其他业务：** 社区、医疗、幼儿园、店铺、训练、捐赠、服务预约。
+6. **执行验证：** 后端 TypeScript 构建、前端构建、API 集成测试、权限测试和端到端测试；记录实际结果。
+7. **最后确定部署方案：** 收敛根目录与 `client/` 重复结构，确认 Next.js 输出方式与 Netlify 配置一致，再部署。
+
+## 5. 本轮尚未完成的验证
+
+- 未连接真实 MongoDB，未运行后端服务。
+- 未执行后端 `npm run build` 或前端完整构建。
+- 未对每个 API 执行真实 HTTP 请求。
+- 未完成所有页面的逐项 UI/表单审计。
+- 未验证生产环境 CORS、上传、权限和部署配置。
+- 未修改业务源代码。
+
+**当前状态：第一轮静态审计发现高优先级问题；第一阶段仍未完成。**
