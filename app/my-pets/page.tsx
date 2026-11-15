@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { getPets, Pet, createPet } from '../../src/api/pet'
+import { getMyPets, Pet, createPet, deletePet } from '../../src/api/pet'
 
 export default function MyPetsPage() {
   const [pets, setPets] = useState<Pet[]>([])
@@ -27,8 +27,8 @@ export default function MyPetsPage() {
   const loadPets = async () => {
     try {
       setLoading(true)
-      const data = await getPets({})
-      setPets(data.pets || [])
+      const data = await getMyPets()
+      setPets(data.data || [])
     } catch (error) {
       console.error('加载宠物列表失败:', error)
     } finally {
@@ -43,7 +43,7 @@ export default function MyPetsPage() {
         ...formData,
         age: formData.age ? parseInt(formData.age) : undefined,
         weight: formData.weight ? parseFloat(formData.weight) : undefined,
-        photos: formData.photoUrls ? formData.photoUrls.split(',').map(url => url.trim()) : [],
+        images: formData.photoUrls ? formData.photoUrls.split(',').map(url => url.trim()).filter(Boolean) : [],
       }
       await createPet(payload)
       alert('宠物添加成功！')
@@ -73,9 +73,9 @@ export default function MyPetsPage() {
   const handleDelete = async (id: string) => {
     if (!confirm('确定要删除这只宠物吗？')) return
     try {
-      // TODO: 调用删除 API
+      await deletePet(id)
       alert('删除成功')
-      loadPets()
+      await loadPets()
     } catch (error) {
       console.error('删除宠物失败:', error)
       alert('删除失败，请稍后重试')
@@ -137,9 +137,9 @@ export default function MyPetsPage() {
           {pets.map((pet) => (
             <div key={pet._id} className="col-md-6 col-lg-4 mb-4">
               <div className="card h-100 shadow-sm">
-                {pet.photos?.[0] ? (
+                {pet.images?.[0] ? (
                   <img
-                    src={pet.photos[0]}
+                    src={pet.images[0]}
                     className="card-img-top"
                     alt={pet.name}
                     style={{ height: '200px', objectFit: 'cover' }}
@@ -254,7 +254,7 @@ export default function MyPetsPage() {
                       </select>
                     </div>
                     <div className="col-md-6 mb-3">
-                      <label className="form-label">品种</label>
+                      <label className="form-label">品种 *</label>
                       <input
                         type="text"
                         className="form-control"
@@ -267,7 +267,7 @@ export default function MyPetsPage() {
 
                   <div className="row">
                     <div className="col-md-4 mb-3">
-                      <label className="form-label">年龄（岁）</label>
+                      <label className="form-label">年龄（岁）*</label>
                       <input
                         type="number"
                         className="form-control"
@@ -275,6 +275,7 @@ export default function MyPetsPage() {
                         onChange={(e) => setFormData({...formData, age: e.target.value})}
                         min="0"
                         max="30"
+                        required
                       />
                     </div>
                     <div className="col-md-4 mb-3">
