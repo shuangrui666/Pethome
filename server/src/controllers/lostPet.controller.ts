@@ -187,7 +187,6 @@ export const submitClue = async (req: AuthRequest, res: Response) => {
       reporterId: new mongoose.Types.ObjectId(req.user!.userId),
       location: {
         type: 'Point',
-        coordinates: lostPet.lostLocation.coordinates,
         address: clueLocation
       },
       time: new Date(clueTime),
@@ -306,46 +305,6 @@ export const getNearbyLostPets = async (_req: Request, res: Response) => {
     message: '附近搜索需要真实地理编码服务，目前尚未接入'
   });
 };
-
-// 计算两点之间的距离（米）
-function calculateDistance(coord1: number[], coord2: number[]): number {
-  const R = 6371e3; // 地球半径（米）
-  const lat1 = (coord1[1] * Math.PI) / 180;
-  const lat2 = (coord2[1] * Math.PI) / 180;
-  const dLat = ((coord2[1] - coord1[1]) * Math.PI) / 180;
-  const dLon = ((coord2[0] - coord1[0]) * Math.PI) / 180;
-
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-  return R * c;
-}
-
-// 计算相似度分数
-function calculateSimilarity(lostPet1: any, lostPet2: any, distance: number): number {
-  let score = 100;
-
-  // 距离越近分数越高
-  score -= Math.min(distance / 100, 50);
-
-  // 时间越近分数越高
-  const timeDiff = Math.abs(lostPet1.lostTime.getTime() - lostPet2.lostTime.getTime());
-  score -= Math.min(timeDiff / (24 * 60 * 60 * 1000), 30);
-
-  // 如果品种相同加分
-  if (lostPet1.petId && lostPet2.petId) {
-    if (lostPet1.petId.breed === lostPet2.petId.breed) {
-      score += 20;
-    }
-    if (lostPet1.petId.species === lostPet2.petId.species) {
-      score += 10;
-    }
-  }
-
-  return Math.max(0, score);
-}
 
 // 删除走失宠物报告
 export const deleteLostPet = async (req: AuthRequest, res: Response) => {
