@@ -163,10 +163,9 @@ export default function CreateLostPetPage() {
         lostTime: '',
         lostLocation: {
           type: 'Point' as const,
-          coordinates: [116.4074, 39.9042] as [number, number],
           address: '',
-          city: '北京市',
-          district: '朝阳区'
+          city: '',
+          district: ''
         },
         contactPhone: '',
         contactWechat: '',
