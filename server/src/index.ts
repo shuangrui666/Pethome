@@ -45,9 +45,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // 请求日志中间件
 app.use((req, res, next) => {
-  console.log(`=== 请求：${req.method} ${req.path} ===`);
-  console.log('请求头:', req.headers);
-  console.log('请求体:', req.body);
+  // 仅记录请求方法和路径，避免将认证令牌、密码及用户提交内容写入日志。
+  console.log(`[HTTP] ${req.method} ${req.path}`);
   next();
 });
 
