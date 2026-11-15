@@ -35,7 +35,7 @@ export interface ILostPet extends Document {
     reporterId: mongoose.Types.ObjectId;
     location: {
       type: { type: string };
-      coordinates: number[];
+      coordinates?: number[];
       address: string;
     };
     time: Date;
@@ -104,19 +104,17 @@ const lostPetSchema = new Schema<ILostPet>(
       },
       coordinates: {
         type: [Number],
-        required: true
+        required: false
       },
       address: {
         type: String,
         required: true
       },
       city: {
-        type: String,
-        required: true
+        type: String
       },
       district: {
-        type: String,
-        required: true
+        type: String
       }
     },
     lastSeenTime: {
@@ -182,8 +180,6 @@ const lostPetSchema = new Schema<ILostPet>(
   }
 );
 
-// 地理位置索引
-lostPetSchema.index({ lostLocation: '2dsphere' });
 lostPetSchema.index({ reporterId: 1 });
 lostPetSchema.index({ status: 1, species: 1 });
 
