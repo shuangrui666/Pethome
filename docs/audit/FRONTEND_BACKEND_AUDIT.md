@@ -58,6 +58,8 @@
 4. `app/globals.css`：改用本地系统字体栈。
 5. `src/api/axios.ts`：401 会话失效时改跳转到现有 `/auth` 页面。
 6. `components/Navbar.tsx`：安全处理损坏的 localStorage 用户 JSON；暂时移除不存在的消息入口。
+7. `server/src/controllers/auth.controller.ts`：修正注册查重逻辑，用户名、邮箱、手机号任意一项重复都会触发查重，而不是错误地要求用户名与邮箱/手机号同时匹配。
+8. `server/.env.example`：将弱 JWT 示例密钥替换为必须由部署者自行生成的安全占位值。
 
 ## 6. 尚未验证的事项
 
