@@ -60,7 +60,7 @@ export default function LostPetDetailPage() {
 
   const handleShare = () => {
     if (navigator.share && lostPet) {
-      const petName = lostPet.petId?.name || '走失宠物'
+      const petName = lostPet.petName || lostPet.petId?.name || '走失宠物'
       const breed = lostPet.petId?.breed || '宠物'
       navigator.share({
         title: `寻找走失宠物：${petName}`,
@@ -200,7 +200,7 @@ export default function LostPetDetailPage() {
 
               {/* 特征描述 */}
               <h5 className="mb-3">🎯 显著特征</h5>
-              <p className="text-muted">{lostPet.features || lostPet.features || lostPet.petId?.description || '暂无描述'}</p>
+              <p className="text-muted">{lostPet.features || lostPet.petId?.description || '暂无描述'}</p>
 
               {/* 详细描述 */}
               <h5 className="mb-3">📝 详细描述</h5>
