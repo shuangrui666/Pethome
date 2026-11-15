@@ -324,9 +324,9 @@ export const getMyLostPets = async (req: AuthRequest, res: Response) => {
   try {
     const { status, page = 1, limit = 20 } = req.query;
 
+    // LostPet 模型没有 type 字段；所有该用户创建的走失报告均从 reporterId 查询。
     const query: any = {
-      reporterId: req.user!.userId,
-      type: { $in: ['lost', undefined] }
+      reporterId: req.user!.userId
     };
     if (status) query.status = status;
 
