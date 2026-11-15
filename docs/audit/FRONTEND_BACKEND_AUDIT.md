@@ -52,7 +52,7 @@
 
 工作分支：`fix/pethome-security-and-build-baseline`
 
-1. `server/src/index.ts`：移除会输出全部请求头和请求体的调试日志，避免 Authorization、密码和个人信息进入日志。
+1. `server/src/index.ts`：移除会输出全部请求头和请求体的调试日志，避免 Authorization、密码和个人信息进入日志；启动时校验 JWT_SECRET 至少 32 位，并要求生产环境显式配置 MONGODB_URI。
 2. `server/src/controllers/auth.controller.ts`：移除注册/登录过程中的敏感调试输出。
 3. `app/layout.tsx`：移除构建时访问 Google Fonts 的 Inter 下载依赖。
 4. `app/globals.css`：改用本地系统字体栈。
@@ -60,13 +60,14 @@
 6. `components/Navbar.tsx`：安全处理损坏的 localStorage 用户 JSON；暂时移除不存在的消息入口。
 7. `server/src/controllers/auth.controller.ts`：修正注册查重逻辑，用户名、邮箱、手机号任意一项重复都会触发查重，而不是错误地要求用户名与邮箱/手机号同时匹配。
 8. `server/.env.example`：将弱 JWT 示例密钥替换为必须由部署者自行生成的安全占位值。
+9. `.github/workflows/ci.yml`：新增前端 Next.js build 与后端 TypeScript build 的 GitHub Actions 检查流程；目前尚未观察到该工作流运行结果。
 
 ## 6. 尚未验证的事项
 
 - 修复分支尚未在用户本地执行 Next.js build 或浏览器验收。
 - 后端尚未执行 TypeScript build、数据库连接和 API 集成测试。
-- 当前后端默认 MongoDB 地址为 localhost；生产环境连接配置尚未验证。
-- `server/.env.example` 中 JWT 示例密钥不应直接用于生产。
+- 开发环境未设置 MONGODB_URI 时仍默认连接 localhost；生产环境现要求显式配置 MONGODB_URI。
+- 后端启动现要求配置至少 32 位的 JWT_SECRET；部署环境必须设置真实随机密钥，不能直接复制示例占位值。
 - 根目录 `netlify.toml` 的 `publish = "out"` 与当前 Next.js 默认构建配置之间存在疑点；`NEXT_EXPORT` 不是 Next.js 自动启用静态导出的配置。不可在未验证部署方式前将其视为已正确配置。
 - Netlify 需要选择兼容 Next.js SSR 的部署插件/配置，或明确改造为静态导出；这两种部署策略不能混用。
 
