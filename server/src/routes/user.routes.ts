@@ -1,6 +1,6 @@
 import express from 'express';
 import { body } from 'express-validator';
-import { getUserProfile, updateUserProfile, getUsers, getUserStats } from '../controllers/user.controller';
+import { getUserProfile, getCurrentUserProfile, updateUserProfile, getUsers, getUserStats } from '../controllers/user.controller';
 import { authenticate } from '../middleware/auth.middleware';
 import { validate } from '../middleware/validate.middleware';
 
@@ -10,7 +10,7 @@ const router = express.Router();
 router.get('/', authenticate, getUsers);
 
 // 获取自己的资料
-router.get('/me', authenticate, getUserProfile);
+router.get('/me', authenticate, getCurrentUserProfile);
 
 // 获取其他用户资料
 router.get('/:id', getUserProfile);
