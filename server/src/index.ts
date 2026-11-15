@@ -43,13 +43,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 请求日志中间件
-app.use((req, res, next) => {
-  console.log(`=== 请求：${req.method} ${req.path} ===`);
-  console.log('请求头:', req.headers);
-  console.log('请求体:', req.body);
-  next();
-});
+// 生产环境不得记录请求头或请求体，避免泄露 Authorization、密码及个人信息。
 
 // 静态文件服务
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
