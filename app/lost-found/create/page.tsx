@@ -45,10 +45,9 @@ export default function CreateLostPetPage() {
     lostTime: '',
     lostLocation: {
       type: 'Point' as const,
-      coordinates: [116.4074, 39.9042] as [number, number],
       address: '',
-      city: '北京市',
-      district: '朝阳区'
+      city: '',
+      district: ''
     },
     contactPhone: '',
     contactWechat: '',
@@ -362,6 +361,15 @@ export default function CreateLostPetPage() {
                     />
                   </div>
 
+                  <div className="space-y-2">
+                    <Label htmlFor="lostCity">所在城市</Label>
+                    <Input
+                      id="lostCity"
+                      value={formData.lostLocation.city}
+                      onChange={(e) => handleInputChange('lostLocation.city', e.target.value)}
+                      placeholder="例如：北京市"
+                    />
+                  </div>
                   <div className="space-y-2">
                     <Label htmlFor="lostDistrict">走失区域</Label>
                     <Input
