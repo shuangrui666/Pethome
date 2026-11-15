@@ -7,6 +7,7 @@ import {
   updateLostPetStatus as updateLostPet,
   deleteLostPet,
   getMyLostPets,
+  getNearbyLostPets,
   submitClue,
   matchLostPets as getMatches,
   updateLostPetStatus as confirmFound
@@ -35,6 +36,9 @@ router.post('/', authenticate, upload.array('images', 5), [
   body('contactPhone').trim().notEmpty().withMessage('联系电话不能为空'),
   body('reward').optional().isNumeric()
 ], validate, createLostPet);
+
+// 附近搜索（当前会明确提示地理编码服务尚未接入）
+router.get('/nearby', getNearbyLostPets);
 
 // 获取走失宠物详情
 router.get('/:id', getLostPetById);
