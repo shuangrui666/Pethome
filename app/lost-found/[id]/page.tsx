@@ -138,10 +138,13 @@ export default function LostPetDetailPage() {
       </div>
 
       {/* 紧急状态横幅 */}
-      <div className="alert alert-danger d-flex align-items-center mb-4" role="alert">
-        <span className="badge bg-danger me-2">紧急</span>
+      <div className={`alert ${lostPet.status === 'found' ? 'alert-success' : 'alert-danger'} d-flex align-items-center mb-4`} role="alert">
+        <span className={`badge ${lostPet.status === 'found' ? 'bg-success' : 'bg-danger'} me-2`}>
+          {lostPet.status === 'found' ? '已找到' : lostPet.status === 'closed' ? '已关闭' : '紧急'}
+        </span>
         <div>
-          <strong>宠物走失中！</strong> 如果您有任何线索，请立即联系主人
+          <strong>{lostPet.status === 'found' ? '宠物已找到！' : lostPet.status === 'closed' ? '该寻宠报告已关闭' : '宠物走失中！'}</strong>
+          {lostPet.status === 'lost' && ' 如果您有任何线索，请立即联系主人'}
         </div>
       </div>
 
