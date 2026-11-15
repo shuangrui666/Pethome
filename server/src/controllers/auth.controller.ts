@@ -9,18 +9,15 @@ export const register = async (req: Request, res: Response) => {
   try {
     const { username, email, password, phone } = req.body;
 
-    // 检查用户是否存在
-    const query: any = { username };
+    // 任一身份字段重复都应拒绝注册，不能要求 username 与 email/phone 同时匹配。
+    const duplicateConditions: Array<Record<string, string>> = [{ username }];
     if (email) {
-      query.$or = [{ email }];
+      duplicateConditions.push({ email: email.toLowerCase() });
     }
     if (phone) {
-      if (!query.$or) {
-        query.$or = [];
-      }
-      query.$or.push({ phone });
+      duplicateConditions.push({ phone });
     }
-    const existingUser = await User.findOne(query);
+    const existingUser = await User.findOne({ $or: duplicateConditions });
     if (existingUser) {
       return res.status(400).json({
         success: false,
