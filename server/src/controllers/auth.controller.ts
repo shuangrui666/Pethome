@@ -7,10 +7,7 @@ import { AuthRequest } from '../middleware/auth.middleware';
 // 注册
 export const register = async (req: Request, res: Response) => {
   try {
-    console.log('=== 注册请求开始 ===');
-    console.log('请求体:', req.body);
     const { username, email, password, phone } = req.body;
-    console.log('解构后的值:', { username, email, password, phone });
 
     // 检查用户是否存在
     const query: any = { username };
@@ -76,10 +73,7 @@ export const register = async (req: Request, res: Response) => {
 // 登录
 export const login = async (req: Request, res: Response) => {
   try {
-    console.log('=== 登录请求开始 ===');
-    console.log('请求体:', req.body);
     const { usernameOrEmail, password } = req.body;
-    console.log('解构后的值:', { usernameOrEmail, password });
 
     if (!usernameOrEmail || !password) {
       return res.status(400).json({
@@ -97,12 +91,9 @@ export const login = async (req: Request, res: Response) => {
     } else {
       query = { username: usernameOrEmail };
     }
-    console.log('查询条件:', query);
 
     // 查找用户 (需要选择 password 字段)
     const user = await User.findOne(query).select('+password');
-    console.log('查找到的用户:', user ? { id: user._id, username: user.username } : 'null');
-    console.log('用户密码字段是否存在:', user?.password ? '是' : '否');
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -111,9 +102,7 @@ export const login = async (req: Request, res: Response) => {
     }
 
     // 验证密码
-    console.log('开始验证密码...');
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    console.log('密码验证结果:', isPasswordValid ? '成功' : '失败');
     if (!isPasswordValid) {
       return res.status(401).json({
         success: false,
@@ -245,57 +234,10 @@ export const uploadAvatar = async (req: AuthRequest, res: Response) => {
   }
 };
 
-// 实名认证
-export const verifyRealName = async (req: AuthRequest, res: Response) => {
-  try {
-    const { realName, idCard, idCardFront, idCardBack } = req.body;
-
-    // 这里应该调用真实的实名认证接口
-    // 实际实现需要接入公安系统接口
-    // 这里模拟验证成功
-
-    // 验证身份证格式 (简单验证)
-    const idCardRegex = /^[1-9]\d{5}(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])\d{3}[\dXx]$/;
-    if (!idCardRegex.test(idCard)) {
-      return res.status(400).json({
-        success: false,
-        message: '身份证号格式不正确'
-      });
-    }
-
-    // 验证文件上传
-    if (!req.files || !Array.isArray(req.files) || req.files.length === 0) {
-      return res.status(400).json({
-        success: false,
-        message: '请上传身份证正反面图片'
-      });
-    }
-
-    // 更新用户实名认证信息
-    const user = await User.findByIdAndUpdate(
-      req.user!.userId,
-      {
-        realName,
-        idCard,
-        idCardFront: `/uploads/${(req.files as any)['idCardFront'][0].filename}`,
-        idCardBack: `/uploads/${(req.files as any)['idCardBack'][0].filename}`,
-        realNameVerified: true,
-        verifiedAt: new Date()
-      },
-      { new: true, select: '-password' }
-    );
-
-    res.json({
-      success: true,
-      message: '实名认证成功',
-      data: user
-    });
-  } catch (error: any) {
-    console.error('实名认证错误:', error);
-    res.status(500).json({
-      success: false,
-      message: '实名认证失败',
-      error: error.message
-    });
-  }
+// 实名认证：未接入可信的第三方核验服务前，禁止将账号标记为已实名。
+export const verifyRealName = async (_req: AuthRequest, res: Response) => {
+  return res.status(501).json({
+    success: false,
+    message: '实名认证服务尚未接入，当前无法完成真实身份核验。为保护账户安全，系统不会仅凭身份证格式或图片上传自动通过认证。'
+  });
 };
