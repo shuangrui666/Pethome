@@ -2,49 +2,64 @@ import api from './axios'
 
 export interface LostPet {
   _id: string
+  petId?: string | {
+    _id: string
+    name?: string
+    species?: 'dog' | 'cat' | 'other'
+    breed?: string
+    age?: number
+    gender?: 'male' | 'female' | 'unknown'
+    color?: string
+    images?: string[]
+    description?: string
+  } | null
+  reporterId: string | {
+    _id: string
+    username?: string
+    phone?: string
+    avatar?: string
+  }
   petName: string
-  petType: 'dog' | 'cat' | 'other'
+  species: 'dog' | 'cat' | 'other'
   breed: string
+  gender: 'male' | 'female' | 'unknown'
+  age?: number
   color: string
-  age: number
-  gender: 'male' | 'female'
-  images?: string[]
-  description: string
+  features?: string
+  images: string[]
   lostLocation: {
     type: 'Point'
-    coordinates: [number, number]
+    coordinates?: [number, number]
     address: string
-    city: string
-    district: string
+    city?: string
+    district?: string
   }
   lostTime: string
   contactPhone: string
   contactWechat?: string
   reward?: number
-  status: 'lost' | 'found' | 'returned' | 'closed'
-  matchedPets?: string[]
-  clues?: Clue[]
-  reporterId: string
+  status: 'lost' | 'found' | 'adopted' | 'closed'
+  reports?: Clue[]
   createdAt: string
   updatedAt: string
 }
 
 export interface Clue {
   _id: string
-  lostPetId: string
-  clueType: 'sighting' | 'found' | 'other'
-  description: string
-  photo?: string
-  location?: {
-    type: 'Point'
-    coordinates: [number, number]
+  reporterId: string | {
+    _id: string
+    username?: string
+    avatar?: string
   }
-  address?: string
+  location: {
+    type: 'Point'
+    coordinates?: [number, number]
+    address: string
+  }
   time: string
-  reporterName: string
-  reporterPhone: string
-  status: 'pending' | 'verified' | 'ignored'
-  createdAt: string
+  description: string
+  images: string[]
+  status: 'verified' | 'unverified'
 }
 
 // 创建走失宠物报告
