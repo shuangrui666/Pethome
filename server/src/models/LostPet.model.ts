@@ -14,10 +14,10 @@ export interface ILostPet extends Document {
   lostTime: Date;
   lostLocation: {
     type: { type: string };
-    coordinates: number[];
+    coordinates?: number[];
     address: string;
-    city: string;
-    district: string;
+    city?: string;
+    district?: string;
   };
   lastSeenTime?: Date;
   lastSeenLocation?: string;
