@@ -87,7 +87,7 @@ export default function LostFoundPage() {
                 className={`nav-link ${tab === 'found' ? 'active' : ''}`}
                 onClick={() => setTab('found')}
               >
-                🎉 发现报告
+                🎉 已找到
               </button>
             </li>
           </ul>
@@ -97,7 +97,7 @@ export default function LostFoundPage() {
       <div className="row mb-4">
         <div className="col-12 text-end">
           <Link href="/lost-found/create" className="btn btn-success">
-            📝 发布{tab === 'lost' ? '走失' : '发现'}报告
+            📝 发布走失报告
           </Link>
         </div>
       </div>
@@ -150,13 +150,8 @@ export default function LostFoundPage() {
                     </small>
                   </p>
                   <p className="card-text">
-                    {item.description?.substring(0, 80) || ''}...
+                    {item.features?.substring(0, 80) || ''}...
                   </p>
-                  {item.matchedPets !== undefined && item.matchedPets.length > 0 && (
-                    <div className="alert alert-warning mb-0">
-                      <small>🤖 智能匹配到 {item.matchedPets.length} 条相似记录</small>
-                    </div>
-                  )}
                 </div>
                 <div className="card-footer bg-transparent">
                   <Link
