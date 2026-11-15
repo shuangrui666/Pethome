@@ -124,7 +124,7 @@ export const addClue = async (
   data: FormData
 ) => {
   const response = await api.post(`/lost-pets/${lostPetId}/clue`, data, {
-    headers: { 'Content-Type': 'multipart/form-data' }
+    headers: { 'Content-Type': undefined }
   })
   return response.data
 }
