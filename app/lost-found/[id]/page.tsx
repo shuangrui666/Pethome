@@ -11,12 +11,9 @@ export default function LostPetDetailPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [tip, setTip] = useState({
-    name: '',
-    phone: '',
     location: '',
     time: '',
     description: '',
-    contact: true,
   })
   const [showTipForm, setShowTipForm] = useState(false)
 
@@ -52,7 +49,7 @@ export default function LostPetDetailPage() {
       await addClue(params.id as string, formData);
       alert('线索已提交，等待核实，感谢帮助！');
       setShowTipForm(false);
-      setTip({ name: '', phone: '', location: '', time: '', description: '', contact: true });
+      setTip({ location: '', time: '', description: '' });
       const refreshed = await getLostPetById(params.id as string);
       if (refreshed.success && refreshed.data?.lostPet) setLostPet(refreshed.data.lostPet);
     } catch (error: any) {
@@ -203,7 +200,7 @@ export default function LostPetDetailPage() {
 
               {/* 特征描述 */}
               <h5 className="mb-3">🎯 显著特征</h5>
-              <p className="text-muted">{lostPet.features || lostPet.petId?.description || '暂无描述'}</p>
+              <p className="text-muted">{lostPet.features || lostPet.features || lostPet.petId?.description || '暂无描述'}</p>
 
               {/* 详细描述 */}
               <h5 className="mb-3">📝 详细描述</h5>
@@ -218,38 +215,6 @@ export default function LostPetDetailPage() {
               )}
             </div>
           </div>
-
-          {/* 相似宠物匹配 */}
-          {lostPet.matches && lostPet.matches.length > 0 && (
-            <div className="card mb-4">
-              <div className="card-header bg-info text-white">
-                <h5 className="mb-0">🤖 AI 智能匹配 - 相似宠物</h5>
-              </div>
-              <div className="card-body">
-                <p className="text-muted mb-3">系统自动匹配到以下相似的走失/被拾到宠物：</p>
-                <div className="row">
-                  {lostPet.matches.map((similar: any) => (
-                    <div className="col-md-6 mb-3" key={similar._id}>
-                      <div className="card border-info">
-                        <div className="card-body">
-                          <div className="d-flex justify-content-between align-items-center mb-2">
-                            <h6 className="mb-0">{similar.name}</h6>
-                            <span className="badge bg-info">{similar.similarity}% 相似</span>
-                          </div>
-                          <p className="mb-1 small">品种：{similar.breed}</p>
-                          <p className="mb-1 small">地点：{similar.location}</p>
-                          <p className="mb-2 small">日期：{similar.date}</p>
-                          <Link href={`/lost-found/${similar._id}`} className="btn btn-sm btn-outline-info">
-                            查看详情
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* 提供线索 */}
           <div className="card">
@@ -266,28 +231,6 @@ export default function LostPetDetailPage() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmitTip}>
-                  <div className="mb-3">
-                    <label htmlFor="tipName" className="form-label">您的姓名</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="tipName"
-                      value={tip.name}
-                      onChange={(e) => setTip({ ...tip, name: e.target.value })}
-                      required
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="tipPhone" className="form-label">联系电话</label>
-                    <input
-                      type="tel"
-                      className="form-control"
-                      id="tipPhone"
-                      value={tip.phone}
-                      onChange={(e) => setTip({ ...tip, phone: e.target.value })}
-                      required
-                    />
-                  </div>
                   <div className="mb-3">
                     <label htmlFor="tipLocation" className="form-label">看到宠物的地点</label>
                     <input
@@ -322,18 +265,6 @@ export default function LostPetDetailPage() {
                       placeholder="请详细描述您看到宠物的情况，包括宠物的状态、行为等"
                       required
                     />
-                  </div>
-                  <div className="form-check mb-3">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id="tipContact"
-                      checked={tip.contact}
-                      onChange={(e) => setTip({ ...tip, contact: e.target.checked })}
-                    />
-                    <label className="form-check-label" htmlFor="tipContact">
-                      允许主人联系我
-                    </label>
                   </div>
                   <div className="d-flex gap-2">
                     <button type="submit" className="btn btn-success">
